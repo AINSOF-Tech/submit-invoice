@@ -4,13 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Submit Invoice · AINSOF</title>
-<meta name="description" content="AINSOF composer payment portal. Submit your invoice in under two minutes.">
-<meta property="og:title" content="Submit Invoice · AINSOF">
-<meta property="og:description" content="AINSOF composer payment portal. Submit your invoice in under two minutes.">
-<meta property="og:image" content="https://ainsof-tech.github.io/submit-invoice/assets/hero_banner.png">
-<meta property="og:url" content="https://ainsof-tech.github.io/submit-invoice/">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="AINSOF composer payment portal. Submit your invoice in under three minutes.">
 <link rel="icon" type="image/png" href="assets/ainsof_mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,332 +13,472 @@
   :root {
     --bg:        #08080A;
     --surface:   #101013;
+    --surface-2: #16161B;
     --line:      #22222A;
+    --line-2:    #2E2E36;
     --text:      #ffffff;
     --muted:     #8A8A92;
+    --muted-2:   #6A6A72;
     --accent:    #E8C547;
     --accent-soft: rgba(232, 197, 71, 0.10);
     --accent-mid:  rgba(232, 197, 71, 0.30);
     --accent-hover: #f0d05a;
-    --accent-glow: rgba(232, 197, 71, 0.45);
+    --error: #E25555;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
   html, body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    font-size: 16px;
-    line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    background: var(--bg); color: var(--text);
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    font-size: 16px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
   }
-
   a { color: var(--text); text-decoration: none; transition: opacity 200ms ease; }
   a:hover { opacity: 0.7; }
 
-  /* ===== TOPBAR ===== */
   .topbar {
-    width: 100%;
-    padding: 24px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    width: 100%; padding: 22px 40px;
+    display: flex; align-items: center; justify-content: space-between;
     border-bottom: 1px solid var(--line);
-    background: rgba(8,8,10,0.78);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    background: rgba(8,8,10,0.85);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    position: sticky; top: 0; z-index: 100;
   }
-
-  .topbar-logo img { height: 22px; width: auto; display: block; }
+  .topbar-logo img { height: 20px; width: auto; display: block; }
   .topbar-link {
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    font-weight: 500;
+    font-size: 11px; color: var(--muted);
+    letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500;
   }
 
-  /* ===== HERO — wide band using Or's banner.png ===== */
   .hero {
-    position: relative;
-    width: 100%;
-    max-width: 1536px;             /* = native source image width; never upscales */
-    margin: 0 auto;                /* center on wider monitors; body bg fills sides */
-    height: 420px;                 /* wide hero band, not tall */
-    overflow: hidden;
+    position: relative; width: 100%; max-width: 1536px;
+    margin: 0 auto; height: 320px; overflow: hidden;
     background-color: var(--bg);
     background-image: url('assets/hero_banner.png');
-    background-size: cover;        /* crops top/bottom for wide-band look */
-    background-position: center;
-    background-repeat: no-repeat;
+    background-size: cover; background-position: center; background-repeat: no-repeat;
   }
-
-  .hero-img {
-    display: none;                 /* not used; kept for fallback */
-  }
-
-  /* darkening overlay over the image — for legible text */
   .hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
+    content: ""; position: absolute; inset: 0;
     background:
       radial-gradient(ellipse 60% 70% at 50% 50%, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.20) 60%, transparent 100%),
       linear-gradient(180deg, transparent 0%, transparent 75%, var(--bg) 100%);
-    pointer-events: none;
-    z-index: 1;
+    pointer-events: none; z-index: 1;
   }
-
-  .hero-content {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 0 24px;
-  }
-
-  .hero-content .big {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(38px, 6vw, 72px);
-    font-weight: 800;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: #fff;
-    line-height: 1.0;
-    text-shadow: 0 4px 24px rgba(0,0,0,0.85), 0 0 70px rgba(0,0,0,0.7);
-  }
-
-  .hero-content .big em {
-    font-style: normal;
-    color: var(--accent);
-  }
-
-  .hero-content .sub {
-    margin-top: 18px;
-    font-size: 12px;
-    letter-spacing: 0.36em;
-    text-transform: uppercase;
-    color: var(--accent);
-    font-weight: 600;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-  }
-
-  /* ===== HERO BELOW TEXT ===== */
-  .hero-below {
-    text-align: center;
-    padding: 36px 24px 0;
-  }
-
+  .hero-below { text-align: center; padding: 28px 24px 0; }
   .hero-below .big {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(34px, 5vw, 64px);
-    font-weight: 800;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: #fff;
-    line-height: 1.05;
+    font-size: clamp(34px, 5vw, 60px); font-weight: 800;
+    letter-spacing: 0.04em; text-transform: uppercase; color: #fff; line-height: 1.05;
+  }
+  .hero-below .big em { font-style: normal; color: var(--accent); }
+
+  .app { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* Two-column layout for intro screen on desktop */
+  .app.intro-layout {
+    max-width: 1440px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 560px;
+    gap: 56px;
+    align-items: start;
+  }
+  @media (max-width: 1180px) {
+    .app.intro-layout { grid-template-columns: 1fr; gap: 32px; }
+    .invoice-sample-sticky { position: static !important; }
   }
 
-  .hero-below .big em {
-    font-style: normal;
-    color: var(--accent);
+  /* ============ INTRO / GUIDELINES ============ */
+  .intro-title {
+    font-size: clamp(34px, 5vw, 48px); font-weight: 800;
+    letter-spacing: -0.03em; line-height: 1.05;
+    margin-bottom: 14px;
+  }
+  .intro-title .accent { color: var(--accent); }
+  .intro-lede {
+    font-size: 16px; color: var(--muted); line-height: 1.6;
+    margin-bottom: 40px; max-width: 560px;
   }
 
-  .hero-below .sub {
-    margin-top: 12px;
-    font-size: 11px;
-    letter-spacing: 0.36em;
-    text-transform: uppercase;
-    color: var(--accent);
-    font-weight: 600;
+  .guidelines {
+    display: flex; flex-direction: column; gap: 18px;
+    margin-bottom: 36px;
   }
 
-  /* ===== PAGE WRAP ===== */
-  .wrap {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 64px 32px 60px;
+  .guideline {
+    display: flex; gap: 16px;
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 14px; padding: 20px 22px;
   }
 
-  .intro { text-align: center; margin-bottom: 56px; }
-
-  .intro-eyebrow {
-    display: inline-flex; align-items: center; gap: 9px;
-    font-size: 11px; font-weight: 600;
-    letter-spacing: 0.24em; text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 24px;
-    padding: 7px 14px;
-    border: 1px solid var(--accent-mid);
-    border-radius: 999px;
-    background: var(--accent-soft);
+  .guideline-num {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--accent-soft); border: 1px solid var(--accent-mid);
+    color: var(--accent); font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
   }
 
-  .intro-eyebrow::before {
+  .guideline-warning { border-color: var(--accent-mid); background: var(--accent-soft); }
+  .guideline-warning .guideline-num { background: var(--accent); color: #1a1400; }
+
+  .guideline-body h3 {
+    font-size: 15px; font-weight: 600; margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .guideline-body p {
+    font-size: 13.5px; color: var(--muted); line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .guideline-body p:last-child { margin-bottom: 0; }
+  .guideline-body strong { color: var(--text); font-weight: 600; }
+
+  .guideline-list {
+    list-style: none; padding-left: 0;
+    font-size: 13.5px; color: var(--muted); line-height: 1.7;
+    margin-bottom: 12px;
+  }
+  .guideline-list li {
+    padding-left: 22px; position: relative;
+  }
+  .guideline-list li::before {
+    content: "→"; position: absolute; left: 0; color: var(--accent);
+  }
+
+  .example-box {
+    background: var(--surface-2); border: 1px solid var(--line);
+    border-radius: 8px; padding: 14px 16px;
+    font-size: 13px; color: var(--muted); line-height: 1.7;
+  }
+  .example-row { margin-bottom: 6px; }
+  .example-row:last-child { margin-bottom: 0; }
+  .example-key {
+    color: var(--accent); font-weight: 600;
+    letter-spacing: 0.04em; margin-right: 4px;
+  }
+
+  .intro-cta { text-align: center; margin-top: 8px; }
+  .intro-cta .btn-primary { min-width: 220px; padding: 16px 36px; font-size: 15px; }
+  .intro-cta .btn-primary span { margin-left: 4px; transition: transform 200ms ease; }
+  .intro-cta .btn-primary:hover span { transform: translateX(4px); }
+
+  /* ============ INVOICE SAMPLE ============ */
+  .invoice-sample-sticky {
+    position: sticky; top: 100px;
+  }
+  .invoice-sample-label {
+    font-size: 10px; letter-spacing: 0.24em;
+    text-transform: uppercase; color: var(--accent);
+    font-weight: 600; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .invoice-sample-label::before {
     content: ""; width: 6px; height: 6px;
     background: var(--accent); border-radius: 50%;
-    box-shadow: 0 0 10px var(--accent-glow);
+    box-shadow: 0 0 8px var(--accent);
   }
-
-  h1.title {
-    font-size: clamp(34px, 5vw, 56px);
-    font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: -0.035em;
-    margin-bottom: 22px;
-  }
-
-  h1.title .accent { color: var(--accent); }
-
-  .lede {
-    font-size: 17px; color: var(--muted);
-    max-width: 560px; margin: 0 auto 40px;
-    line-height: 1.6;
-  }
-
-  .lede strong { color: var(--text); font-weight: 600; }
-
-  .cta-primary {
-    display: inline-flex; align-items: center; justify-content: center; gap: 12px;
-    background: var(--accent); color: #1a1400;
-    font-weight: 700; font-size: 16px; letter-spacing: 0.02em;
-    padding: 20px 36px; border-radius: 999px;
-    border: none; cursor: pointer; text-decoration: none;
-    transition: all 200ms ease;
-    box-shadow: 0 10px 32px rgba(232, 197, 71, 0.20);
-  }
-
-  .cta-primary:hover {
-    background: var(--accent-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 16px 44px rgba(232, 197, 71, 0.32);
-    opacity: 1;
-  }
-
-  .cta-primary .arrow { font-size: 18px; line-height: 1; transition: transform 200ms ease; }
-  .cta-primary:hover .arrow { transform: translateX(4px); }
-
-  .cta-meta {
-    display: block; font-size: 12px; color: var(--muted);
-    margin-top: 16px; letter-spacing: 0.04em; text-align: center;
-  }
-
-  .section-eyebrow {
-    font-size: 11px; font-weight: 600;
-    letter-spacing: 0.26em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 14px; text-align: center;
-  }
-
-  .section-title {
-    font-size: 28px; font-weight: 700; letter-spacing: -0.02em;
-    text-align: center; margin-bottom: 36px;
-  }
-
-  .steps {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 16px; margin-bottom: 56px;
-  }
-
-  .step {
-    background: var(--surface); border: 1px solid var(--line);
-    border-radius: 12px; padding: 28px 24px;
-    transition: border-color 200ms ease, transform 200ms ease;
-  }
-
-  .step:hover { border-color: var(--accent-mid); transform: translateY(-3px); }
-
-  .step-num {
-    width: 32px; height: 32px; border-radius: 50%;
-    background: var(--accent-soft); border: 1px solid var(--accent-mid);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 700; color: var(--accent);
-    margin-bottom: 18px;
-  }
-
-  .step h3 {
-    font-size: 14px; font-weight: 600; margin-bottom: 6px;
-    color: var(--text); letter-spacing: -0.01em;
-  }
-
-  .step p { font-size: 13px; color: var(--muted); line-height: 1.55; }
-
-  .cta-final {
-    background: var(--surface);
-    border: 1px solid var(--accent-mid);
-    border-radius: 16px;
-    padding: 44px 32px;
-    text-align: center;
+  .invoice-sample {
+    background: #FAFAF5;
+    color: #1A1A1F;
+    border-radius: 14px;
+    padding: 48px 44px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.45);
     position: relative;
     overflow: hidden;
-    margin-bottom: 60px;
   }
-
-  .cta-final::before {
+  .invoice-sample::before {
     content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 480px 200px at 50% 0%, rgba(232,197,71,0.10) 0%, transparent 70%),
-      radial-gradient(ellipse 600px 240px at 50% 100%, rgba(232,197,71,0.06) 0%, transparent 70%);
-    pointer-events: none;
+    position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--accent), #f0d05a);
   }
 
-  .cta-final-eyebrow {
-    font-size: 11px; color: var(--accent); font-weight: 600;
-    letter-spacing: 0.24em; text-transform: uppercase;
-    margin-bottom: 10px; position: relative;
+  .inv-header {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; margin-bottom: 22px;
+    padding-bottom: 16px; border-bottom: 1px solid #E5E5DE;
+  }
+  .inv-brand {
+    font-size: 24px; font-weight: 800; letter-spacing: -0.02em;
+  }
+  .inv-meta { text-align: right; font-size: 13.5px; color: #5A5A60; }
+  .inv-meta .inv-num { font-weight: 700; color: #1A1A1F; font-size: 16px; }
+
+  .inv-section { margin-bottom: 22px; }
+  .inv-section-label {
+    font-size: 11.5px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: #8A8A92;
+    font-weight: 600; margin-bottom: 8px;
+  }
+  .inv-section-body { font-size: 14.5px; color: #1A1A1F; line-height: 1.6; }
+  .inv-section-body strong { font-weight: 600; }
+
+  .inv-section.highlighted {
+    background: rgba(232, 197, 71, 0.18);
+    margin-left: -10px; margin-right: -10px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border-left: 3px solid var(--accent);
   }
 
-  .cta-final h2 {
-    font-size: 26px; font-weight: 700; letter-spacing: -0.02em;
-    margin-bottom: 10px; position: relative;
+  .inv-line {
+    display: flex; justify-content: space-between;
+    padding: 10px 0; border-bottom: 1px dashed #E5E5DE;
+    font-size: 13.5px;
+  }
+  .inv-line:last-child { border-bottom: none; }
+  .inv-line .desc { flex: 1; padding-right: 12px; }
+  .inv-line .amount { font-weight: 600; }
+
+  .inv-total {
+    margin-top: 4px;
+    display: flex; justify-content: space-between;
+    font-size: 20px; font-weight: 800;
+    color: #1A1A1F;
   }
 
-  .cta-final p {
-    font-size: 14px; color: var(--muted); margin-bottom: 24px;
-    position: relative; max-width: 420px; margin: 0 auto 24px;
+  .inv-footer-note {
+    margin-top: 18px; font-size: 11.5px;
+    color: #8A8A92; line-height: 1.5; text-align: center;
   }
 
-  .cta-final .cta-primary { position: relative; }
+  .progress { margin-bottom: 56px; }
+  .progress-track { height: 2px; background: var(--line); border-radius: 2px; overflow: hidden; position: relative; }
+  .progress-fill {
+    height: 100%; background: var(--accent); border-radius: 2px;
+    transition: width 400ms cubic-bezier(0.22, 1, 0.36, 1); width: 25%;
+  }
+  .progress-labels {
+    display: flex; justify-content: space-between; margin-top: 14px;
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted-2); font-weight: 500;
+  }
+  .progress-labels span {
+    transition: color 200ms ease; flex: 1; text-align: center;
+    cursor: pointer; user-select: none;
+  }
+  .progress-labels span:first-child { text-align: left; }
+  .progress-labels span:last-child { text-align: right; }
+  .progress-labels span:hover { color: var(--text); }
+  .progress-labels span.active { color: var(--accent); font-weight: 600; }
+
+  .step-header { margin-bottom: 36px; }
+  .step-counter {
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; margin-bottom: 12px;
+  }
+  .step-title {
+    font-size: clamp(28px, 4vw, 40px); font-weight: 800;
+    letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 10px;
+  }
+  .step-subtitle {
+    font-size: 15px; color: var(--muted); line-height: 1.55; max-width: 500px;
+  }
+
+  .step { display: none; animation: stepFade 360ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .step.active { display: block; }
+  @keyframes stepFade {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .field { margin-bottom: 22px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .row.single { grid-template-columns: 1fr; }
+
+  .field-label {
+    display: block; font-size: 13px; font-weight: 500;
+    color: var(--text); margin-bottom: 8px;
+  }
+  .field-label .req { color: var(--accent); margin-left: 3px; }
+  .field-hint {
+    font-size: 12px; color: var(--muted-2); margin-bottom: 8px; line-height: 1.45;
+  }
+
+  .field input, .field textarea, .field select {
+    width: 100%; background: var(--surface); border: 1px solid var(--line);
+    color: var(--text); font-family: inherit; font-size: 14px;
+    padding: 14px 16px; border-radius: 10px;
+    transition: border-color 150ms ease, background 150ms ease;
+  }
+  .field input::placeholder, .field textarea::placeholder { color: var(--muted-2); }
+  .field input:focus, .field textarea:focus, .field select:focus {
+    outline: none; border-color: var(--accent); background: var(--surface-2);
+  }
+  .field textarea { min-height: 90px; resize: vertical; font-family: inherit; }
+
+  .pill-group { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill { position: relative; cursor: pointer; }
+  .pill input { position: absolute; opacity: 0; pointer-events: none; }
+  .pill span {
+    display: inline-block; padding: 9px 16px;
+    border: 1px solid var(--line); background: var(--surface);
+    border-radius: 999px; font-size: 13px; color: var(--muted);
+    transition: all 150ms ease; user-select: none;
+  }
+  .pill:hover span { border-color: var(--accent-mid); color: var(--text); }
+  .pill input:checked + span {
+    background: var(--accent-soft); border-color: var(--accent);
+    color: var(--accent); font-weight: 600;
+  }
+
+  /* payment method radio grid */
+  .pay-method-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+    margin-bottom: 18px;
+  }
+  .pay-method { position: relative; cursor: pointer; display: block; }
+  .pay-method input { position: absolute; opacity: 0; pointer-events: none; }
+  .pay-method-card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 10px; padding: 16px 12px; text-align: center;
+    transition: all 150ms ease;
+  }
+  .pay-method:hover .pay-method-card { border-color: var(--accent-mid); }
+  .pay-method input:checked ~ .pay-method-card {
+    background: var(--accent-soft); border-color: var(--accent);
+  }
+  .pay-method-title {
+    font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px;
+  }
+  .pay-method input:checked ~ .pay-method-card .pay-method-title { color: var(--accent); }
+  .pay-method-sub { font-size: 11px; color: var(--muted-2); }
+
+  .pay-detail-block {
+    display: none;
+    padding: 18px; background: var(--surface-2);
+    border-radius: 12px; border: 1px solid var(--line);
+    margin-bottom: 18px;
+    animation: stepFade 240ms ease;
+  }
+  .pay-detail-block.active { display: block; }
+
+  @media (max-width: 640px) {
+    .pay-method-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* radio group (large clickable cards) */
+  .radio-group { display: flex; flex-direction: column; gap: 10px; }
+  .radio-card {
+    cursor: pointer; padding: 16px 18px;
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 10px; transition: all 150ms ease;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .radio-card:hover { border-color: var(--accent-mid); }
+  .radio-card input { display: none; }
+  .radio-card .dot {
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 1.5px solid var(--line-2); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 150ms ease;
+  }
+  .radio-card .dot::after {
+    content: ''; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent); opacity: 0; transition: opacity 150ms ease;
+  }
+  .radio-card .label { font-size: 14px; color: var(--text); }
+  .radio-card input:checked ~ .dot { border-color: var(--accent); }
+  .radio-card input:checked ~ .dot::after { opacity: 1; }
+  .radio-card:has(input:checked) {
+    background: var(--accent-soft); border-color: var(--accent);
+  }
+
+  /* file upload zone */
+  .file-zone {
+    position: relative; display: block; padding: 28px 20px;
+    border: 1.5px dashed var(--line-2); border-radius: 12px;
+    text-align: center; background: var(--surface);
+    cursor: pointer; transition: all 150ms ease;
+  }
+  .file-zone:hover { border-color: var(--accent); background: var(--surface-2); }
+  .file-zone.has-file { border-style: solid; border-color: var(--accent); background: var(--accent-soft); }
+  .file-zone input[type="file"] { display: none; }
+  .file-zone .icon { font-size: 32px; margin-bottom: 8px; }
+  .file-zone .title { font-size: 14px; color: var(--text); font-weight: 500; margin-bottom: 4px; }
+  .file-zone .sub { font-size: 12px; color: var(--muted-2); }
+  .file-zone .filename { color: var(--accent); font-weight: 600; }
+
+  .nav {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 44px; padding-top: 32px;
+    border-top: 1px solid var(--line); gap: 12px;
+  }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: inherit; font-weight: 600; font-size: 14px;
+    padding: 13px 26px; border-radius: 999px; border: none;
+    cursor: pointer; transition: all 180ms ease;
+  }
+  .btn-ghost {
+    background: transparent; color: var(--muted); border: 1px solid var(--line);
+  }
+  .btn-ghost:hover { color: var(--text); border-color: var(--line-2); }
+  .btn-ghost:disabled { opacity: 0.35; cursor: not-allowed; }
+  .btn-primary {
+    background: var(--accent); color: #1a1400;
+    box-shadow: 0 8px 24px rgba(232, 197, 71, 0.20); min-width: 140px;
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--accent-hover); transform: translateY(-1px);
+    box-shadow: 0 12px 32px rgba(232, 197, 71, 0.30);
+  }
+  .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  .success-screen { display: none; text-align: center; padding: 80px 24px; animation: stepFade 360ms ease; }
+  .success-screen.active { display: block; }
+  .success-mark {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--accent-soft); border: 1px solid var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 28px; font-size: 28px; color: var(--accent);
+  }
+  .success-title { font-size: 32px; font-weight: 800; letter-spacing: -0.025em; margin-bottom: 12px; }
+  .success-text {
+    font-size: 15px; color: var(--muted); max-width: 420px; margin: 0 auto; line-height: 1.6;
+  }
+
+  .dev-toggle {
+    position: fixed; bottom: 18px; right: 18px;
+    background: var(--surface); border: 1px solid var(--line);
+    color: var(--muted); font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 8px 12px; border-radius: 999px;
+    cursor: pointer; z-index: 200; font-family: inherit;
+    transition: all 150ms ease;
+  }
+  .dev-toggle:hover { color: var(--accent); border-color: var(--accent-mid); }
+  .dev-toggle.on { color: var(--accent); border-color: var(--accent); }
 
   footer {
-    border-top: 1px solid var(--line);
-    padding: 32px 40px;
+    border-top: 1px solid var(--line); padding: 24px 40px;
     display: flex; justify-content: space-between; align-items: center;
-    flex-wrap: wrap; gap: 14px;
-    max-width: 1200px; margin: 0 auto;
+    flex-wrap: wrap; gap: 14px; max-width: 1200px; margin: 0 auto;
   }
-
   footer .foot-l {
-    font-size: 11px; color: var(--muted);
-    letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600;
+    font-size: 11px; color: var(--muted-2);
+    letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500;
   }
-
   footer .foot-r { font-size: 13px; color: var(--muted); }
   footer .foot-r a { color: var(--text); border-bottom: 1px solid var(--line); padding-bottom: 1px; }
 
-  @media (max-width: 720px) {
-    .topbar { padding: 18px 22px; }
-    .hero-content .big { font-size: 28px; letter-spacing: 0.03em; }
-    .hero-content .sub { font-size: 10px; letter-spacing: 0.28em; }
-    .wrap { padding: 44px 20px 40px; }
-    .steps { grid-template-columns: 1fr; }
-    h1.title { font-size: 30px; }
-    .lede { font-size: 15px; }
-    .cta-primary { padding: 18px 26px; font-size: 14px; width: 100%; }
-    .cta-final { padding: 32px 22px; }
-    .cta-final h2 { font-size: 22px; }
-    footer { padding: 22px; }
+  .form-error {
+    margin-top: 14px; padding: 14px 18px;
+    background: rgba(226, 85, 85, 0.08);
+    border: 1px solid rgba(226, 85, 85, 0.30);
+    color: #EC8888; border-radius: 10px;
+    font-size: 13px; display: none;
+  }
+  .form-error.show { display: block; }
+
+  @media (max-width: 640px) {
+    .topbar { padding: 16px 20px; }
+    .app { padding: 32px 18px 56px; }
+    .row { grid-template-columns: 1fr; }
+    .nav { flex-direction: column-reverse; align-items: stretch; }
+    .btn { width: 100%; }
+    .step-title { font-size: 26px; }
+    footer { padding: 18px 20px; }
   }
 </style>
 </head>
@@ -357,67 +491,580 @@
   <a class="topbar-link" href="https://search.ainsof.io" target="_blank" rel="noopener">Catalog ↗</a>
 </header>
 
-<section class="hero">
-  <img class="hero-img" src="assets/hero_banner.jpg" alt="AINSOF" />
-</section>
+<section class="hero"></section>
 
 <div class="hero-below">
-  <div class="big">Submit Your <em>Invoice</em></div>
+  <div class="big">Submit <em>Invoice</em></div>
 </div>
 
-<main class="wrap">
+<main class="app intro-layout" id="appMain">
 
-  <section class="intro">
-    <div class="intro-eyebrow">How it works</div>
-    <h1 class="title">A direct way to <span class="accent">get paid</span>.</h1>
-    <p class="lede">
-      Click the button below to open the secure form. Submission takes about <strong>two minutes</strong>; payment is processed within <strong>ten business days</strong>.
+  <!-- ============ INTRO / GUIDELINES ============ -->
+  <section class="intro-screen" id="introScreen">
+    <h1 class="intro-title">Submit Your <span class="accent">Invoice</span>.</h1>
+    <p class="intro-lede">
+      Before you begin — please review these guidelines. They make sure your invoice gets processed quickly and paid on time.
     </p>
 
-    <a class="cta-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSdWPo95VV-A8RPzKQPMCgUuc1prngYiGN9eOaLb10RvF5nEmA/viewform" target="_blank" rel="noopener">
-      Click here to submit your invoice
-      <span class="arrow">→</span>
-    </a>
-    <span class="cta-meta">Opens the secure form in a new tab.</span>
+    <div class="guidelines">
+
+      <div class="guideline">
+        <div class="guideline-num">1</div>
+        <div class="guideline-body">
+          <h3>Album / Release (Work for hire)</h3>
+          <p>In the subject or description of the invoice, include the project name, project code, and a clear description of your work.</p>
+          <div class="example-box">
+            <div class="example-row"><span class="example-key">PROJECT TITLE:</span> AIN-CAT 004_Cold Fire (Trailerized Pop) (Working Title)</div>
+            <div class="example-row"><span class="example-key">DESCRIPTION:</span> Full payment for producing, composing, and sound designing ten (10) tracks for AIN-CAT 004_Cold Fire (Trailerized Pop) album. (Full buyout agreement / Hybrid agreement 35/65 / Recoupable, etc.)</div>
+            <div class="example-row"><span class="example-key">BUDGET:</span> $XXX</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="guideline">
+        <div class="guideline-num">2</div>
+        <div class="guideline-body">
+          <h3>Royalties</h3>
+          <p>For royalty payments, submit your invoice according to the royalty report you received.</p>
+          <div class="example-box">
+            <div class="example-row"><span class="example-key">PERIOD:</span> S1 / S2 2026</div>
+            <div class="example-row"><span class="example-key">DESCRIPTION:</span> Royalty payment based on S1 2026 report for tracks included in AINSOF catalog.</div>
+            <div class="example-row"><span class="example-key">AMOUNT:</span> $XXX (must match the report)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="guideline guideline-warning">
+        <div class="guideline-num">!</div>
+        <div class="guideline-body">
+          <h3>Important</h3>
+          <p>Your invoice must clearly specify what it relates to (project or royalty period), including all relevant details such as project title, project code, or reporting period.</p>
+          <p><strong>Incomplete or unclear information may delay processing and payment.</strong></p>
+        </div>
+      </div>
+
+      <div class="guideline">
+        <div class="guideline-num">3</div>
+        <div class="guideline-body">
+          <h3>General requirements</h3>
+          <ul class="guideline-list">
+            <li>Include an invoice number and date.</li>
+            <li>Include your full bank transfer details (IBAN, bank name, etc.).</li>
+            <li>Include the billing details below on the invoice.</li>
+          </ul>
+          <div class="example-box">
+            <div class="example-row"><span class="example-key">Bill To:</span> Or Chausha AINSOF</div>
+            <div class="example-row"><span class="example-key">Address:</span> 2 Yaar Haruvit Street, Suite #6, Modi'in Maccabim-Reut, Israel 7169201</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="intro-cta">
+      <button type="button" class="btn btn-primary" id="startBtn">
+        I'm ready — start <span>→</span>
+      </button>
+    </div>
   </section>
 
-  <div class="section-eyebrow">Before you click</div>
-  <h2 class="section-title">Please prepare these three items.</h2>
+  <!-- ============ INVOICE SAMPLE (right column on desktop) ============ -->
+  <aside class="invoice-sample-sticky" id="invoiceSample">
+    <div class="invoice-sample-label">Sample invoice</div>
+    <div class="invoice-sample">
 
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <h3>Invoice file (PDF)</h3>
-      <p>A formal invoice addressed to AINSOF — include your name, ID/business number, invoice number and date.</p>
+      <div class="inv-header">
+        <div>
+          <div class="inv-brand">Daniel Cohen</div>
+          <div style="font-size: 10.5px; color: #5A5A60; margin-top: 4px;">
+            Composer · Tax ID 123456789<br>
+            Dizengoff 100, Tel Aviv, Israel
+          </div>
+        </div>
+        <div class="inv-meta">
+          <div class="inv-num">Invoice #2026-014</div>
+          <div>Date: 12 May 2026</div>
+        </div>
+      </div>
+
+      <div class="inv-section">
+        <div class="inv-section-label">Bill To</div>
+        <div class="inv-section-body">
+          <strong>Or Chausha AINSOF</strong><br>
+          2 Yaar Haruvit Street, Suite #6<br>
+          Modi'in Maccabim-Reut, Israel 7169201
+        </div>
+      </div>
+
+      <div class="inv-section highlighted">
+        <div class="inv-section-label">Project Title</div>
+        <div class="inv-section-body">
+          <strong>AIN-CAT 004_Cold Fire (Trailerized Pop)</strong>
+        </div>
+      </div>
+
+      <div class="inv-section highlighted">
+        <div class="inv-section-label">Description</div>
+        <div class="inv-section-body">
+          Full payment for producing, composing, and sound designing ten (10) tracks for AIN-CAT 004_Cold Fire (Trailerized Pop) album. Full buyout agreement.
+        </div>
+      </div>
+
+      <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid #E5E5DE;">
+        <div class="inv-total">
+          <div>Total</div>
+          <div>$5,000</div>
+        </div>
+      </div>
+
+      <div class="inv-section" style="margin-top: 20px; padding-top: 14px; border-top: 1px solid #E5E5DE;">
+        <div class="inv-section-label">Payment details</div>
+        <div class="inv-section-body" style="font-size: 10.5px; line-height: 1.6;">
+          Bank: Leumi<br>
+          IBAN: IL62 0108 0000 0009 9999 999<br>
+          SWIFT: LUMIILIT<br>
+          Holder: Daniel Cohen
+        </div>
+      </div>
+
+      <div class="inv-footer-note">
+        Yellow-highlighted fields are the most important.<br>
+        Please make sure they appear on your invoice exactly like this.
+      </div>
+
     </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <h3>Bank details</h3>
-      <p>Account holder, IBAN/account number, SWIFT/BIC where applicable. Used solely for payment.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <h3>Project reference</h3>
-      <p>The album code (e.g. AIN-CAT 050) or project name this invoice relates to.</p>
+  </aside>
+
+  <!-- ============ FORM CONTAINER (hidden until intro Start) ============ -->
+  <div id="formContainer" style="display: none;">
+
+  <div class="progress" id="progress">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-labels">
+      <span class="active" data-step="1">You</span>
+      <span data-step="2">Project</span>
+      <span data-step="3">Payment</span>
+      <span data-step="4">Upload</span>
     </div>
   </div>
 
-  <div class="cta-final">
-    <div class="cta-final-eyebrow">Ready?</div>
-    <h2>Open the submission form.</h2>
-    <p>You'll receive an email confirmation once your invoice is submitted.</p>
-    <a class="cta-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSdWPo95VV-A8RPzKQPMCgUuc1prngYiGN9eOaLb10RvF5nEmA/viewform" target="_blank" rel="noopener">
-      Click here to submit your invoice
-      <span class="arrow">→</span>
-    </a>
+  <form id="invoiceForm" novalidate>
+
+    <!-- STEP 1: YOU -->
+    <section class="step active" data-step="1">
+      <div class="step-header">
+        <div class="step-counter">Step 1 of 4</div>
+        <h1 class="step-title">Who is this invoice from?</h1>
+        <p class="step-subtitle">Basic details so we can match the invoice to you in our records.</p>
+      </div>
+
+      <div class="field row">
+        <div>
+          <label class="field-label" for="full_name">Full name<span class="req">*</span></label>
+          <input id="full_name" name="full_name" type="text" required placeholder="Daniel Cohen" />
+        </div>
+        <div>
+          <label class="field-label" for="email">Email<span class="req">*</span></label>
+          <input id="email" name="email" type="email" required placeholder="daniel.cohen@gmail.com" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="tax_id">Tax ID number</label>
+        <div class="field-hint">If applicable. Leave blank if you don't have one.</div>
+        <input id="tax_id" name="tax_id" type="text" placeholder="123456789" />
+      </div>
+    </section>
+
+    <!-- STEP 2: PROJECT -->
+    <section class="step" data-step="2">
+      <div class="step-header">
+        <div class="step-counter">Step 2 of 4</div>
+        <h1 class="step-title">What is this invoice for?</h1>
+        <p class="step-subtitle">Tell us which project or royalty period this invoice covers.</p>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="invoice_category">What is this invoice for?<span class="req">*</span></label>
+        <div class="field-hint">Choose the category that best matches this invoice.</div>
+        <select id="invoice_category" name="invoice_category" required>
+          <option value="" disabled selected>Select a category</option>
+          <option value="Royalty / Sync Statement">Royalty / Sync Statement</option>
+          <option value="Album Buyout">Album Buyout</option>
+          <option value="Multiple Albums Buyout">Multiple Albums Buyout</option>
+          <option value="Buyout single track">Buyout single track</option>
+          <option value="Buyout multiple tracks">Buyout multiple tracks</option>
+          <option value="Album Advance">Album Advance</option>
+          <option value="Music services (Singer, Producer, Writer, Performer)">Music services (Singer, Producer, Writer, Performer)</option>
+          <option value="Additional Expenses">Additional Expenses</option>
+          <option value="Recoupable Agreement">Recoupable Agreement</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="project_details">Project / Album details OR royalty period<span class="req">*</span></label>
+        <div class="field-hint">
+          • For projects: Album name + project code (e.g. "AIN-CAT 050_Trailer Percussion (Power Percussion Trailer)")<br>
+          • For royalties: Reporting period (e.g. "Q2 2026")
+        </div>
+        <input id="project_details" name="project_details" type="text" required placeholder="AIN-CAT 050_Trailer Percussion (Power Percussion Trailer)" />
+      </div>
+    </section>
+
+    <!-- STEP 3: PAYMENT -->
+    <section class="step" data-step="3">
+      <div class="step-header">
+        <div class="step-counter">Step 3 of 4</div>
+        <h1 class="step-title">How should we pay you?</h1>
+        <p class="step-subtitle">Provide your preferred payment method and the amounts.</p>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Preferred payment method<span class="req">*</span></label>
+        <div class="field-hint">Choose one — the relevant fields will appear below.</div>
+        <div class="pay-method-grid">
+          <label class="pay-method">
+            <input type="radio" name="payment_method_type" value="Bank Transfer" required>
+            <div class="pay-method-card">
+              <div class="pay-method-title">Bank Transfer</div>
+              <div class="pay-method-sub">International wire</div>
+            </div>
+          </label>
+          <label class="pay-method">
+            <input type="radio" name="payment_method_type" value="Payoneer">
+            <div class="pay-method-card">
+              <div class="pay-method-title">Payoneer</div>
+              <div class="pay-method-sub">Fees on recipient</div>
+            </div>
+          </label>
+          <label class="pay-method">
+            <input type="radio" name="payment_method_type" value="Bit">
+            <div class="pay-method-card">
+              <div class="pay-method-title">Bit</div>
+              <div class="pay-method-sub">Israel only</div>
+            </div>
+          </label>
+          <label class="pay-method">
+            <input type="radio" name="payment_method_type" value="PayPal">
+            <div class="pay-method-card">
+              <div class="pay-method-title">PayPal</div>
+              <div class="pay-method-sub">Fees on recipient</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Bank Transfer fields -->
+      <div class="pay-detail-block" data-method="Bank Transfer">
+        <div class="field row">
+          <div>
+            <label class="field-label" for="bank_iban">IBAN<span class="req">*</span></label>
+            <input id="bank_iban" name="bank_iban" type="text" placeholder="IL62 0108 0000 0009 9999 999" />
+          </div>
+          <div>
+            <label class="field-label" for="bank_swift">SWIFT / BIC<span class="req">*</span></label>
+            <input id="bank_swift" name="bank_swift" type="text" placeholder="LUMIILIT" />
+          </div>
+        </div>
+        <div class="field row">
+          <div>
+            <label class="field-label" for="bank_name">Bank name<span class="req">*</span></label>
+            <input id="bank_name" name="bank_name" type="text" placeholder="Bank Leumi" />
+          </div>
+          <div>
+            <label class="field-label" for="bank_holder_name">Account holder name<span class="req">*</span></label>
+            <input id="bank_holder_name" name="bank_holder_name" type="text" placeholder="Daniel Cohen" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="bank_holder_address">Account holder address<span class="req">*</span></label>
+          <input id="bank_holder_address" name="bank_holder_address" type="text" placeholder="Dizengoff 100, Tel Aviv, 6433222, Israel" />
+        </div>
+      </div>
+
+      <!-- Payoneer fields -->
+      <div class="pay-detail-block" data-method="Payoneer">
+        <div class="field">
+          <label class="field-label" for="payoneer_email">Payoneer email<span class="req">*</span></label>
+          <div class="field-hint">Any applicable fees are the responsibility of the recipient.</div>
+          <input id="payoneer_email" name="payoneer_email" type="email" placeholder="daniel.cohen@gmail.com" />
+        </div>
+      </div>
+
+      <!-- Bit fields -->
+      <div class="pay-detail-block" data-method="Bit">
+        <div class="field">
+          <label class="field-label" for="bit_phone">Phone number linked to Bit<span class="req">*</span></label>
+          <input id="bit_phone" name="bit_phone" type="tel" placeholder="0501234567" />
+        </div>
+      </div>
+
+      <!-- PayPal fields -->
+      <div class="pay-detail-block" data-method="PayPal">
+        <div class="field">
+          <label class="field-label" for="paypal_email">PayPal email<span class="req">*</span></label>
+          <div class="field-hint">Any applicable fees are the responsibility of the recipient.</div>
+          <input id="paypal_email" name="paypal_email" type="email" placeholder="daniel.cohen@gmail.com" />
+        </div>
+      </div>
+
+      <div class="field row">
+        <div>
+          <label class="field-label" for="amount_ils">Amount in ILS (with VAT)</label>
+          <div class="field-hint">For Israeli citizens only.</div>
+          <input id="amount_ils" name="amount_ils" type="text" placeholder="5,850" />
+        </div>
+        <div>
+          <label class="field-label" for="amount_usd">Amount in USD</label>
+          <div class="field-hint">Leave blank if not applicable.</div>
+          <input id="amount_usd" name="amount_usd" type="text" placeholder="1,500" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="notes">Any final notes?</label>
+        <input id="notes" name="notes" type="text" placeholder="123456789" />
+      </div>
+    </section>
+
+    <!-- STEP 4: UPLOAD -->
+    <section class="step" data-step="4">
+      <div class="step-header">
+        <div class="step-counter">Step 4 of 4</div>
+        <h1 class="step-title">Upload your invoice.</h1>
+        <p class="step-subtitle">PDF only. Make sure it includes your name, ID/business number, invoice number, and date.</p>
+      </div>
+
+      <div class="field">
+        <label class="file-zone" id="fileZone">
+          <input type="file" id="invoiceFile" name="invoice_file" accept="application/pdf" required>
+          <div class="icon">📄</div>
+          <div class="title" id="fileTitle">Click to choose your invoice PDF</div>
+          <div class="sub" id="fileSub">Max 10 MB</div>
+        </label>
+      </div>
+    </section>
+
+    <div class="nav" id="nav">
+      <button type="button" class="btn btn-ghost" id="prevBtn" disabled>← Back</button>
+      <button type="button" class="btn btn-primary" id="nextBtn">Continue →</button>
+    </div>
+
+    <div class="form-error" id="formError"></div>
+
+  </form>
+
   </div>
+  <!-- end #formContainer -->
+
+  <section class="success-screen" id="successScreen">
+    <div class="success-mark">✓</div>
+    <h2 class="success-title">Invoice submitted.</h2>
+    <p class="success-text">Thanks. Your invoice has been received. Payment is processed within ten business days. You'll receive a confirmation email shortly.</p>
+  </section>
 
 </main>
+
+<button type="button" class="dev-toggle" id="devToggle" title="Toggle preview mode — skip validation for quick walkthrough">Preview mode</button>
 
 <footer>
   <div class="foot-l">© 2026 AINSOF · Music Publishing</div>
   <div class="foot-r">Questions: <a href="mailto:or@ainsof.io">or@ainsof.io</a></div>
 </footer>
+
+<script>
+  const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyiLZh5TAJQuBzk0s6tutostf282XRyablbupdQN0J8ASxr2BDCQsXdzs__BnbuOLrLeg/exec';
+
+  // intro start button
+  document.getElementById('startBtn').addEventListener('click', () => {
+    document.getElementById('introScreen').style.display = 'none';
+    document.getElementById('invoiceSample').style.display = 'none';
+    document.getElementById('appMain').classList.remove('intro-layout');
+    document.getElementById('formContainer').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  const TOTAL_STEPS = 4;
+  let currentStep = 1;
+  let uploadedFile = null;
+
+  const steps   = document.querySelectorAll('.step');
+  const fill    = document.getElementById('progressFill');
+  const labels  = document.querySelectorAll('.progress-labels span');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const form    = document.getElementById('invoiceForm');
+  const errBox  = document.getElementById('formError');
+  const successScreen = document.getElementById('successScreen');
+  const navBox  = document.getElementById('nav');
+  const progressBox = document.getElementById('progress');
+
+  // dev mode
+  let devMode = false;
+  const devToggle = document.getElementById('devToggle');
+  devToggle.addEventListener('click', () => {
+    devMode = !devMode;
+    devToggle.classList.toggle('on', devMode);
+    devToggle.textContent = devMode ? 'Preview mode: ON' : 'Preview mode';
+  });
+
+  function showStep(n) {
+    steps.forEach(s => s.classList.toggle('active', +s.dataset.step === n));
+    labels.forEach(l => l.classList.toggle('active', +l.dataset.step <= n));
+    fill.style.width = (n / TOTAL_STEPS * 100) + '%';
+    prevBtn.disabled = n === 1;
+    nextBtn.textContent = n === TOTAL_STEPS ? 'Submit ✓' : 'Continue →';
+    errBox.classList.remove('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function validateStep(n) {
+    if (devMode) return true;
+    const stepEl = document.querySelector('.step[data-step="' + n + '"]');
+    const required = stepEl.querySelectorAll('[required]');
+    for (const f of required) {
+      if (f.type === 'file') {
+        if (!uploadedFile) {
+          errBox.textContent = 'Please upload your invoice PDF before continuing.';
+          errBox.classList.add('show');
+          return false;
+        }
+      } else if (f.type === 'radio') {
+        const group = stepEl.querySelectorAll('input[name="' + f.name + '"]');
+        if (!Array.from(group).some(r => r.checked)) {
+          errBox.textContent = 'Please select an option.';
+          errBox.classList.add('show');
+          return false;
+        }
+      } else if (!f.value.trim()) {
+        f.focus();
+        errBox.textContent = 'Please fill in all required fields before continuing.';
+        errBox.classList.add('show');
+        return false;
+      } else if (f.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value)) {
+        f.focus();
+        errBox.textContent = 'Please enter a valid email address.';
+        errBox.classList.add('show');
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // payment method toggle
+  const payRadios = document.querySelectorAll('input[name="payment_method_type"]');
+  const payBlocks = document.querySelectorAll('.pay-detail-block');
+  payRadios.forEach(r => {
+    r.addEventListener('change', () => {
+      payBlocks.forEach(b => {
+        const isActive = b.dataset.method === r.value;
+        b.classList.toggle('active', isActive);
+        // toggle required for nested inputs
+        b.querySelectorAll('input').forEach(inp => {
+          if (isActive) inp.setAttribute('required', '');
+          else inp.removeAttribute('required');
+        });
+      });
+    });
+  });
+
+  // file selection
+  const fileInput = document.getElementById('invoiceFile');
+  const fileZone  = document.getElementById('fileZone');
+  const fileTitle = document.getElementById('fileTitle');
+  const fileSub   = document.getElementById('fileSub');
+
+  fileInput.addEventListener('change', () => {
+    const f = fileInput.files[0];
+    if (!f) return;
+    if (f.size > 10 * 1024 * 1024) {
+      errBox.textContent = 'File is over 10 MB. Please compress it and try again.';
+      errBox.classList.add('show');
+      fileInput.value = '';
+      return;
+    }
+    uploadedFile = f;
+    fileZone.classList.add('has-file');
+    fileTitle.innerHTML = '<span class="filename">' + f.name + '</span>';
+    fileSub.textContent = (f.size / 1024).toFixed(0) + ' KB — click to change';
+  });
+
+  // progress label clicks
+  labels.forEach(label => {
+    label.addEventListener('click', () => {
+      const target = +label.dataset.step;
+      if (devMode || target <= currentStep) {
+        currentStep = target;
+        showStep(currentStep);
+      }
+    });
+  });
+
+  prevBtn.addEventListener('click', () => {
+    if (currentStep > 1) { currentStep--; showStep(currentStep); }
+  });
+
+  nextBtn.addEventListener('click', async () => {
+    if (!validateStep(currentStep)) return;
+
+    if (currentStep < TOTAL_STEPS) {
+      currentStep++;
+      showStep(currentStep);
+      return;
+    }
+
+    // submit
+    const data = {};
+    new FormData(form).forEach((value, key) => {
+      if (key === 'invoice_file') return;
+      data[key] = value;
+    });
+
+    if (!ENDPOINT) {
+      errBox.textContent = 'Form not connected yet. Please email or@ainsof.io.';
+      errBox.classList.add('show');
+      return;
+    }
+
+    nextBtn.disabled = true;
+    prevBtn.disabled = true;
+    nextBtn.textContent = 'Uploading…';
+
+    try {
+      // convert file to base64
+      const fileBase64 = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(uploadedFile);
+      });
+
+      data.file_name = uploadedFile.name;
+      data.file_mime = uploadedFile.type || 'application/pdf';
+      data.file_base64 = fileBase64;
+
+      const res = await fetch(ENDPOINT, { method: 'POST', body: JSON.stringify(data) });
+      const result = await res.json();
+      if (!result.ok) throw new Error(result.error || 'unknown error');
+
+      form.style.display = 'none';
+      progressBox.style.display = 'none';
+      navBox.style.display = 'none';
+      successScreen.classList.add('active');
+    } catch (err) {
+      errBox.textContent = 'Submission failed: ' + err.message + '. Please email or@ainsof.io.';
+      errBox.classList.add('show');
+      nextBtn.disabled = false;
+      prevBtn.disabled = false;
+      nextBtn.textContent = 'Submit ✓';
+    }
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    nextBtn.click();
+  });
+</script>
 
 </body>
 </html>
