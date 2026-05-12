@@ -98,26 +98,27 @@
     margin-bottom: 28px; max-width: 560px;
   }
 
-  .scroll-hint {
-    display: inline-flex; align-items: center; gap: 10px;
-    font-size: 11px; letter-spacing: 0.22em;
+  .scroll-arrow {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 10px; margin: 28px 0 40px;
+  }
+  .scroll-arrow-text {
+    font-size: 11px; letter-spacing: 0.26em;
     text-transform: uppercase; color: var(--accent);
-    font-weight: 600; margin-bottom: 36px;
-    padding: 10px 16px; border-radius: 999px;
+    font-weight: 600;
+  }
+  .scroll-arrow-icon {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1.5px solid var(--accent);
     background: var(--accent-soft);
-    border: 1px solid var(--accent-mid);
-    animation: scrollBounce 2s ease-in-out infinite;
-  }
-  .scroll-hint::after {
-    content: "↓"; font-size: 14px; animation: arrowBounce 1.4s ease-in-out infinite;
-  }
-  @keyframes scrollBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-3px); }
+    color: var(--accent); font-size: 22px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    animation: arrowBounce 1.6s ease-in-out infinite;
+    box-shadow: 0 0 20px rgba(232, 197, 71, 0.20);
   }
   @keyframes arrowBounce {
-    0%, 100% { transform: translateY(0); opacity: 1; }
-    50% { transform: translateY(3px); opacity: 0.6; }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
   }
 
   .guidelines {
@@ -523,12 +524,14 @@
 
   <!-- ============ INTRO / GUIDELINES ============ -->
   <section class="intro-screen" id="introScreen">
-    <h1 class="intro-title">Submit Your <span class="accent">Invoice</span>.</h1>
     <p class="intro-lede">
       Before you begin — please review these guidelines. They make sure your invoice gets processed quickly and paid on time.
     </p>
 
-    <div class="scroll-hint">Scroll down to read · then start</div>
+    <div class="scroll-arrow" aria-hidden="true">
+      <div class="scroll-arrow-text">Scroll down to start</div>
+      <div class="scroll-arrow-icon">↓</div>
+    </div>
 
     <div class="guidelines">
 
