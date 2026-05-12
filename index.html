@@ -95,7 +95,29 @@
   .intro-title .accent { color: var(--accent); }
   .intro-lede {
     font-size: 16px; color: var(--muted); line-height: 1.6;
-    margin-bottom: 40px; max-width: 560px;
+    margin-bottom: 28px; max-width: 560px;
+  }
+
+  .scroll-hint {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 11px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--accent);
+    font-weight: 600; margin-bottom: 36px;
+    padding: 10px 16px; border-radius: 999px;
+    background: var(--accent-soft);
+    border: 1px solid var(--accent-mid);
+    animation: scrollBounce 2s ease-in-out infinite;
+  }
+  .scroll-hint::after {
+    content: "↓"; font-size: 14px; animation: arrowBounce 1.4s ease-in-out infinite;
+  }
+  @keyframes scrollBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+  }
+  @keyframes arrowBounce {
+    0%, 100% { transform: translateY(0); opacity: 1; }
+    50% { transform: translateY(3px); opacity: 0.6; }
   }
 
   .guidelines {
@@ -506,6 +528,8 @@
       Before you begin — please review these guidelines. They make sure your invoice gets processed quickly and paid on time.
     </p>
 
+    <div class="scroll-hint">Scroll down to read · then start</div>
+
     <div class="guidelines">
 
       <div class="guideline">
@@ -901,7 +925,8 @@
     steps.forEach(s => s.classList.toggle('active', +s.dataset.step === n));
     labels.forEach(l => l.classList.toggle('active', +l.dataset.step <= n));
     fill.style.width = (n / TOTAL_STEPS * 100) + '%';
-    prevBtn.disabled = n === 1;
+    prevBtn.disabled = false;
+    prevBtn.textContent = n === 1 ? '← Back to guidelines' : '← Back';
     nextBtn.textContent = n === TOTAL_STEPS ? 'Submit ✓' : 'Continue →';
     errBox.classList.remove('show');
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -989,7 +1014,17 @@
   });
 
   prevBtn.addEventListener('click', () => {
-    if (currentStep > 1) { currentStep--; showStep(currentStep); }
+    if (currentStep > 1) {
+      currentStep--;
+      showStep(currentStep);
+    } else {
+      // back to intro / guidelines
+      document.getElementById('formContainer').style.display = 'none';
+      document.getElementById('introScreen').style.display = 'block';
+      document.getElementById('invoiceSample').style.display = 'block';
+      document.getElementById('appMain').classList.add('intro-layout');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   });
 
   nextBtn.addEventListener('click', async () => {
