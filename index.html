@@ -897,15 +897,6 @@
   const navBox  = document.getElementById('nav');
   const progressBox = document.getElementById('progress');
 
-  // dev mode
-  let devMode = false;
-  const devToggle = document.getElementById('devToggle');
-  devToggle.addEventListener('click', () => {
-    devMode = !devMode;
-    devToggle.classList.toggle('on', devMode);
-    devToggle.textContent = devMode ? 'Preview mode: ON' : 'Preview mode';
-  });
-
   function showStep(n) {
     steps.forEach(s => s.classList.toggle('active', +s.dataset.step === n));
     labels.forEach(l => l.classList.toggle('active', +l.dataset.step <= n));
@@ -917,7 +908,6 @@
   }
 
   function validateStep(n) {
-    if (devMode) return true;
     const stepEl = document.querySelector('.step[data-step="' + n + '"]');
     const required = stepEl.querySelectorAll('[required]');
     for (const f of required) {
@@ -991,7 +981,7 @@
   labels.forEach(label => {
     label.addEventListener('click', () => {
       const target = +label.dataset.step;
-      if (devMode || target <= currentStep) {
+      if (target <= currentStep) {
         currentStep = target;
         showStep(currentStep);
       }
