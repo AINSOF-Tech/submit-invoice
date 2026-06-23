@@ -762,7 +762,14 @@
         <div class="field-hint">Choose one — the relevant fields will appear below.</div>
         <div class="pay-method-grid">
           <label class="pay-method">
-            <input type="radio" name="payment_method_type" value="Bank Transfer" required>
+            <input type="radio" name="payment_method_type" value="Bank Transfer (Israel)" required>
+            <div class="pay-method-card">
+              <div class="pay-method-title">Israeli Bank Transfer</div>
+              <div class="pay-method-sub">Local — bank / branch / account</div>
+            </div>
+          </label>
+          <label class="pay-method">
+            <input type="radio" name="payment_method_type" value="Bank Transfer">
             <div class="pay-method-card">
               <div class="pay-method-title">Bank Transfer</div>
               <div class="pay-method-sub">International wire</div>
@@ -817,6 +824,30 @@
         <div class="field">
           <label class="field-label" for="bank_holder_address">Account holder address<span class="req">*</span></label>
           <input id="bank_holder_address" name="bank_holder_address" type="text" placeholder="Dizengoff 100, Tel Aviv, 6433222, Israel" />
+        </div>
+      </div>
+
+      <!-- Israeli Bank Transfer fields -->
+      <div class="pay-detail-block" data-method="Bank Transfer (Israel)">
+        <div class="field row">
+          <div>
+            <label class="field-label" for="il_account_holder">Account holder name<span class="req">*</span></label>
+            <input id="il_account_holder" name="il_account_holder" type="text" placeholder="Daniel Cohen" />
+          </div>
+          <div>
+            <label class="field-label" for="il_bank_number">Bank number<span class="req">*</span></label>
+            <input id="il_bank_number" name="il_bank_number" type="text" placeholder="12 — Bank Hapoalim" />
+          </div>
+        </div>
+        <div class="field row">
+          <div>
+            <label class="field-label" for="il_branch_number">Branch number<span class="req">*</span></label>
+            <input id="il_branch_number" name="il_branch_number" type="text" placeholder="345" />
+          </div>
+          <div>
+            <label class="field-label" for="il_account_number">Account number<span class="req">*</span></label>
+            <input id="il_account_number" name="il_account_number" type="text" placeholder="123456" />
+          </div>
         </div>
       </div>
 
