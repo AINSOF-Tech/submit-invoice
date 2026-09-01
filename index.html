@@ -16,503 +16,754 @@
 <meta name="twitter:title" content="Time to Get Paid · AINSOF">
 <meta name="twitter:description" content="Submit your invoice in under three minutes. We take it from there.">
 <meta name="twitter:image" content="https://invoices.ainsof.io/assets/og_thumb.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<!-- ═══ the site's own faces, self-hosted ═══
+     Copied byte-for-byte from ainsof.io: Inter for body and UI, Newsreader 500
+     for every heading. Same @font-face block, same unicode-range split, so this
+     page renders in the same two voices as the rest of the site rather than
+     pulling a Google-hosted Inter that is a different file. -->
 <style>
-  :root {
-    --bg:        #08080A;
-    --surface:   #101013;
-    --surface-2: #16161B;
-    --line:      #22222A;
-    --line-2:    #2E2E36;
-    --text:      #ffffff;
-    --muted:     #8A8A92;
-    --muted-2:   #6A6A72;
-    --accent:    #E8C547;
-    --accent-soft: rgba(232, 197, 71, 0.10);
-    --accent-mid:  rgba(232, 197, 71, 0.30);
-    --accent-hover: #f0d05a;
-    --error: #E25555;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body {
-    background: var(--bg); color: var(--text);
-    font-family: 'Inter', -apple-system, system-ui, sans-serif;
-    font-size: 16px; line-height: 1.55;
-    -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
-    min-height: 100vh;
-  }
-  a { color: var(--text); text-decoration: none; transition: opacity 200ms ease; }
-  a:hover { opacity: 0.7; }
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;
+  font-display:swap;src:url(inter.woff2) format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,
+    U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;
+  font-display:swap;src:url(inter-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,
+    U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,
+    U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Newsreader';font-style:normal;font-weight:400 600;
+  font-display:swap;src:url(newsreader.woff2) format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,
+    U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Newsreader';font-style:italic;font-weight:400 600;
+  font-display:swap;src:url(newsreader-italic.woff2) format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,
+    U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 
-  .topbar {
-    width: 100%; padding: 22px 40px;
-    display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 1px solid var(--line);
-    background: rgba(8,8,10,0.85);
-    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-    position: sticky; top: 0; z-index: 100;
-  }
-  .topbar-logo img { height: 20px; width: auto; display: block; }
-  .topbar-link {
-    font-size: 11px; color: var(--muted);
-    letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500;
-  }
+/* ═══ the site's design system ═══
+   Every token below is lifted from ainsof.io/index.html unchanged — colours, the
+   nine-step type ladder, the spacing scale, the easing curve. Nothing here is
+   invented for this page. The old form ran its own palette (a #E8C547 yellow, a
+   #08080A background, pill buttons at radius 999) which is a second design
+   system; it is gone. Accent is --coral, the dusty orange Or picked, and the
+   radius is 0 everywhere, which is the site's standing rule for frames. */
+:root{
+  --bg:#101013; --surface:#17171b;
+  --line:rgba(255,255,255,.075); --line-2:rgba(255,255,255,.18);
+  --ink:#fff; --ink-2:#9d9da8; --ink-3:#5c5c67;
+  --coral:#966249; --coral-dim:rgba(150,98,73,.16);
+  --ring:rgba(150,98,73,.20); --ring-soft:rgba(150,98,73,.10);
+  --page:1760px;
+  --t-display:clamp(44px,6.4vw,84px);
+  --t-display-2:clamp(34px,4.6vw,60px);
+  --t-title:clamp(28px,2.3vw,44px);
+  --t-h2:clamp(24px,1.9vw,34px);
+  --t-h3:clamp(21px,1.6vw,28px);
+  --t-lead:clamp(16px,1vw,19px);
+  --t-body:clamp(14.5px,.78vw,16px);
+  --t-ui:clamp(13px,.66vw,14.5px);
+  --t-meta:clamp(11.5px,.58vw,12.5px);
+  --s2:18px; --s3:28px; --s4:46px; --s5:78px; --s6:126px; --s7:190px;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --sans:'Inter',ui-sans-serif,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  --serif:'Newsreader',Georgia,'Times New Roman',serif;
+  --error:#E25555;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);overflow-x:hidden;min-height:100vh;
+  font:400 var(--t-body)/1.6 var(--sans);letter-spacing:-.014em}
+h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.03em}
+p{color:var(--ink-2)}
+a{color:var(--ink-2);text-decoration:none;transition:color .3s var(--ease)}
+a:hover{color:var(--ink)}
+img{display:block}
+.label{font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:600;font-family:var(--sans)}
 
-  .hero {
-    position: relative; width: 100%; max-width: 1536px;
-    margin: 0 auto; height: 320px; overflow: hidden;
-    background-color: var(--bg);
-    background-image: url('assets/hero_banner.png');
-    background-size: cover; background-position: center; background-repeat: no-repeat;
-  }
-  .hero::after {
-    content: ""; position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 60% 70% at 50% 50%, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.20) 60%, transparent 100%),
-      linear-gradient(180deg, transparent 0%, transparent 75%, var(--bg) 100%);
-    pointer-events: none; z-index: 1;
-  }
-  .hero-below { text-align: center; padding: 28px 24px 0; }
-  .hero-below .big {
-    font-size: clamp(34px, 5vw, 60px); font-weight: 800;
-    letter-spacing: 0.04em; text-transform: uppercase; color: #fff; line-height: 1.05;
-  }
-  .hero-below .big em { font-style: normal; color: var(--accent); }
+/* the painted glow the site opens every page with */
+.glow{pointer-events:none;position:absolute;top:0;left:0;right:0;
+  width:100%;height:auto;z-index:-10;user-select:none}
 
-  .app { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+/* ═══ shared top nav — same markup and rules as every page on ainsof.io ═══ */
+.brand.topnav{position:sticky;top:0;z-index:60;width:100%;
+  display:flex;align-items:center;justify-content:space-between;gap:var(--s4);
+  padding:18px var(--s4);margin:0;
+  background:rgba(16,16,19,.72);
+  -webkit-backdrop-filter:saturate(1.4) blur(16px);
+  backdrop-filter:saturate(1.4) blur(16px);
+  box-shadow:0 18px 40px -30px rgba(0,0,0,.9)}
+.topnav .tn-logo{border:0;display:block;flex:none}
+.topnav .logo{height:26px;width:auto}
+.tn-links{display:flex;align-items:center;gap:var(--s3)}
+.tn-links a{color:var(--ink-2);font-size:15px;text-decoration:none;border:0;
+  text-shadow:0 1px 14px rgba(0,0,0,.6);transition:color .3s var(--ease)}
+.tn-links a:hover{color:var(--ink)}
+@media (max-width:600px){
+  .brand.topnav{padding-left:18px;padding-right:18px}
+  .tn-links{gap:16px} .tn-links a{font-size:14px} .topnav .logo{height:22px}
+  /* 22px of link is a miss waiting to happen on a phone. The box grows, the
+     type does not. Same for the logo, which is also a link. */
+  .tn-links a,.tn-logo{display:inline-flex;align-items:center;min-height:44px}
 
-  /* Two-column layout for intro screen on desktop */
-  .app.intro-layout {
-    max-width: 1440px;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 560px;
-    gap: 56px;
-    align-items: start;
-  }
-  @media (max-width: 1180px) {
-    .app.intro-layout { grid-template-columns: 1fr; gap: 32px; }
-    .invoice-sample-sticky { position: static !important; }
-  }
+}
+@media (max-width:430px){
+  .brand.topnav{flex-wrap:wrap;justify-content:center;row-gap:10px}
+  .tn-links{gap:14px;flex-wrap:wrap;justify-content:center}
+  .tn-links a{font-size:13.5px}
+}
 
-  /* ============ INTRO / GUIDELINES ============ */
-  .intro-title {
-    font-size: clamp(34px, 5vw, 48px); font-weight: 800;
-    letter-spacing: -0.03em; line-height: 1.05;
-    margin-bottom: 14px;
-  }
-  .intro-title .accent { color: var(--accent); }
-  .intro-lede {
-    font-size: 16px; color: var(--muted); line-height: 1.6;
-    margin-bottom: 28px; max-width: 560px;
-  }
+/* ═══ THE COLLAGE ═══
+   Third attempt, and the first two are worth naming so they are not repeated.
+   v1 was a sliding marquee of covers — Or: "לא טוב", and he pointed at
+   artlistmusic.io. v2 copied that page's whole skin, monochrome on #171717 with
+   pill buttons and no serif — Or: "גרוע, זה לא העיצוב שלנו והשפה שלנו". He is
+   right, and the correct split is: their COMPOSITION, our LANGUAGE.
 
-  .scroll-arrow {
-    display: flex; flex-direction: column; align-items: center;
-    gap: 10px; margin: 28px 0 40px;
-  }
-  .scroll-arrow-text {
-    font-size: 11px; letter-spacing: 0.26em;
-    text-transform: uppercase; color: var(--accent);
-    font-weight: 600;
-  }
-  .scroll-arrow-icon {
-    width: 44px; height: 44px; border-radius: 50%;
-    border: 1.5px solid var(--accent);
-    background: var(--accent-soft);
-    color: var(--accent); font-size: 22px; line-height: 1;
-    display: flex; align-items: center; justify-content: center;
-    animation: arrowBounce 1.6s ease-in-out infinite;
-    box-shadow: 0 0 20px rgba(232, 197, 71, 0.20);
-  }
-  @keyframes arrowBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(6px); }
-  }
+   From artlistmusic.io, measured live, we take only the mechanic:
+     · cards at many different sizes, scattered and overlapping — never a row
+     · every frame square-cornered (theirs measure 0px too)
+     · the motion is SCROLL-LINKED, at a different rate per card on both axes.
+       At rest nothing moves; I sampled every 250ms for 3.5s and got zero drift,
+       which is why I first called it static and was wrong. Sampling document
+       position at scrollY 0/500/1100 shows card 1 travelling +448px down and
+       +20px right while card 4 moves +14px. Depth, not a slide.
 
-  .guidelines {
-    display: flex; flex-direction: column; gap: 18px;
-    margin-bottom: 36px;
-  }
+   Everything else is ours: our ground, our coral, our tokens, radius 0.
 
-  .guideline {
-    display: flex; gap: 16px;
-    background: var(--surface); border: 1px solid var(--line);
-    border-radius: 14px; padding: 20px 22px;
-  }
+   ⚠️ Or, 1.9.2026: "תראה את גודל התמונות" — v2's cards were the reference's own
+   280px maximum, which on our page read as thumbnails. Every card is ~1.5×
+   bigger here; the largest is 30% of the field, not 20%. */
+/* ⚠️ Or, 1.9.2026: "תראה אצלם איזה גדול זה החלק הזה." Measured both pages at
+   1440 rather than guessing at it, and the number says something I had wrong:
 
-  .guideline-num {
-    width: 30px; height: 30px; border-radius: 50%;
-    background: var(--accent-soft); border: 1px solid var(--accent-mid);
-    color: var(--accent); font-size: 13px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
+                      artlistmusic.io          ours (before)
+       cards               15                        8
+       field height     3038px  (338% of screen)   823px  (91%)
+       biggest card      315px  (22% of viewport)  418px  (29%)
 
-  .guideline-warning { border-color: var(--accent-mid); background: var(--accent-soft); }
-  .guideline-warning .guideline-num { background: var(--accent); color: #1a1400; }
+   Our CARDS were already the bigger ones. What was small was the SECTION —
+   theirs is something you scroll through for three screens, ours was a band you
+   passed in a second. That is also why their parallax reads so strongly: with
+   3000px of travel behind it, a card at rate .42 moves hundreds of pixels.
+   So the field is now ~3 screens and carries 18 cards, and the individual card
+   comes DOWN a little, to their 22% cluster rather than our 29%. */
+/* artlistmusic.io's field, measured live at 1440 on 1.9: the topmost card sits
+   at y=469 and the tallest bottoms out at 1403 — about 935px of cards. The box
+   is 1500 so the two hard-lagging cards have somewhere to travel. */
+.collage{position:relative;width:100%;overflow:hidden;isolation:isolate}
+/* AUTO-FIELD:START */
+.collage{height:clamp(700px,76.26vw,1500px)}
+@media (max-width:820px){.collage{height:clamp(480px,143.59vw,760px)}}
+/* AUTO-FIELD:END */
+/* ⚠️ Or, 1.9: "אתה עדיין עובד במרכז." He was right, and DevTools on their page
+   says why: artlist's collage container is div.comp-mosldbbu-container at
+   width:1440px — the FULL WINDOW — while this was max-width:1400px;margin:0 auto,
+   a centred column. On his screen that penned every card into the middle. The
+   field is edge to edge now, and each card's left/top is a percentage of the
+   whole window exactly as theirs is. */
+.cw{position:absolute;inset:0}
 
-  .guideline-body h3 {
-    font-size: 15px; font-weight: 600; margin-bottom: 8px;
-    letter-spacing: -0.01em;
-  }
-  .guideline-body p {
-    font-size: 13.5px; color: var(--muted); line-height: 1.6;
-    margin-bottom: 12px;
-  }
-  .guideline-body p:last-child { margin-bottom: 0; }
-  .guideline-body strong { color: var(--text); font-weight: 600; }
+/* ⚠️ Or, 1.9: "הרקע מאחורה לא עשית כמו בארטליסט אבל." הוא צדק. הלכתי ומדדתי
+   את שני האתרים חי במקום לנחש, ומצאתי ששניהם עושים בדיוק אותו דבר — ושאני
+   עשיתי שני דברים שאף אחד מהם לא עושה.
 
-  .guideline-list {
-    list-style: none; padding-left: 0;
-    font-size: 13.5px; color: var(--muted); line-height: 1.7;
-    margin-bottom: 12px;
-  }
-  .guideline-list li {
-    padding-left: 22px; position: relative;
-  }
-  .guideline-list li::before {
-    content: "→"; position: absolute; left: 0; color: var(--accent);
-  }
+   ainsof.io (נמדד חי, 1.9): הרקע הוא <img class="secbg"> / <img class="toolsbg">
+   — לוח אחד לכל סקשן, `object-fit:fill` (נמתח, לא נחתך), `position:absolute`
+   עם inset שלילי כדי לגלוש מעבר לגבולות הסקשן, ו-`mask-image` שמאייד את
+   הקצוות לאפס. .toolsbg מקבל גם `blur(16px)`. **אף פעם לא מרוצף.**
+   ובכל הדף אין ולו אלמנט אחד עם mix-blend-mode או טקסטורת גריין.
 
-  .example-box {
-    background: var(--surface-2); border: 1px solid var(--line);
-    border-radius: 8px; padding: 14px 16px;
-    font-size: 13px; color: var(--muted); line-height: 1.7;
-  }
-  .example-row { margin-bottom: 6px; }
-  .example-row:last-child { margin-bottom: 0; }
-  .example-key {
-    color: var(--accent); font-weight: 600;
-    letter-spacing: 0.04em; margin-right: 4px;
-  }
+   artlistmusic.io (נמדד חי, 1.9): רקע שחור, ומעליו לוח JPG/PNG יחיד לכל
+   סקשן ב-<img> בגודל הסקשן (1440×1098, 1440×1984) — לוח נפרד לכל פס, לא
+   ריצוף של אחד. הלוח עצמו הוא קשת אור אחת ענקית ומטושטשת בשליש העליון,
+   וכל השאר שחור. גם אצלם: אפס גריין, אפס blend.
 
-  .intro-cta { text-align: center; margin-top: 8px; }
-  .intro-cta .btn-primary { min-width: 220px; padding: 16px 36px; font-size: 15px; }
-  .intro-cta .btn-primary span { margin-left: 4px; transition: transform 200ms ease; }
-  .intro-cta .btn-primary:hover span { transform: translateX(4px); }
+   מה שהיה כאן קודם: הלוח **מרוצף** repeat-y לאורך כל השדה, ומעליו שכבת
+   grain-copper ב-mix-blend-mode:overlay. הריצוף חוזר על אותה שלולית חומה שוב
+   ושוב אז השדה אף פעם לא יורד לשחור, והגריין הוסיף עכירות שלא קיימת בשום
+   מקום אצלנו. ההערה שכתבתי כאן קודם, "הגריין שיושב מעל כל לוח מצויר באתר",
+   פשוט לא נכונה — בדקתי את ainsof.io החי ואין שם גריין בכלל.
 
-  /* ============ INVOICE SAMPLE ============ */
-  .invoice-sample-sticky {
-    position: sticky; top: 100px;
-  }
-  .invoice-sample-label {
-    font-size: 10px; letter-spacing: 0.24em;
-    text-transform: uppercase; color: var(--accent);
-    font-weight: 600; margin-bottom: 12px;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .invoice-sample-label::before {
-    content: ""; width: 6px; height: 6px;
-    background: var(--accent); border-radius: 50%;
-    box-shadow: 0 0 8px var(--accent);
-  }
-  .invoice-sample {
-    background: #FAFAF5;
-    color: #1A1A1F;
-    border-radius: 14px;
-    padding: 48px 44px;
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
-    line-height: 1.65;
-    box-shadow: 0 24px 60px rgba(0,0,0,0.45);
-    position: relative;
-    overflow: hidden;
-  }
-  .invoice-sample::before {
-    content: "";
-    position: absolute; top: 0; left: 0; right: 0; height: 4px;
-    background: linear-gradient(90deg, var(--accent), #f0d05a);
-  }
+   מה שיש עכשיו: לוח אחד, נמתח, מעוגן לחלק העליון של השדה, גולש 200px החוצה
+   מכל צד, וממוסך בשני צירים במסכה המדויקת של .toolsbg מהאתר. מתחתיו השדה
+   יורד לשחור והקלפים צפים עליו — הקומפוזיציה של ארטליסט, בשפה שלנו. */
+.cbg{position:absolute;left:-200px;right:-200px;top:-60px;height:78%;
+  z-index:-1;pointer-events:none;user-select:none;
+  width:auto;object-fit:fill;
+  filter:blur(16px);opacity:.85;
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 38%,#000 62%,transparent 100%),
+    linear-gradient(transparent 0%,#000 22%,#000 55%,transparent 100%);
+  mask-image:linear-gradient(to right,transparent 0%,#000 38%,#000 62%,transparent 100%),
+    linear-gradient(transparent 0%,#000 22%,#000 55%,transparent 100%)}
 
-  .inv-header {
-    display: flex; justify-content: space-between;
-    align-items: flex-start; margin-bottom: 22px;
-    padding-bottom: 16px; border-bottom: 1px solid #E5E5DE;
-  }
-  .inv-brand {
-    font-size: 24px; font-weight: 800; letter-spacing: -0.02em;
-  }
-  .inv-meta { text-align: right; font-size: 13.5px; color: #5A5A60; }
-  .inv-meta .inv-num { font-weight: 700; color: #1A1A1F; font-size: 16px; }
+/* ⚠️ Or, 1.9: "בכוונה עשיתי להם עיגול בפינות" — and then "התמונות ממש ממש
+   גדולות בכל מיני גדלים... אל תנחש". Both, together:
+   · the box is artlist's own w:h (measured, seven portrait + one landscape) and
+     the photo is cropped into it with object-fit:cover, which is what makes a
+     card read big — letting the box take the photo's shape turned 315x427 into
+     315x210 for the same width.
+   · cover-cropping cuts away the rounded corner Or baked into the source alpha,
+     so it is drawn back in CSS at the size he actually used: a true 53px circle
+     on a 1024px file = 5.2% of the width, about 15px on the biggest card.
+   · the lift is drop-shadow, not box-shadow, so it follows the rounded edge. */
+.cimg{position:absolute;left:var(--x);top:var(--y);width:var(--w);
+  aspect-ratio:var(--ar);overflow:hidden;
+  border-radius:clamp(8px,1.05vw,17px);
+  filter:drop-shadow(0 34px 54px rgba(0,0,0,.86));
+  will-change:transform}
+/* artlist crops each card toward its subject — their file URLs carry the focal
+   point, e.g. fp_0.32_0.56. Centre-cropping a landscape photo into a portrait
+   box cut faces in half here, so the crop is biased to the upper third, where
+   a standing portrait puts the head. */
+.cimg img{display:block;width:100%;height:100%;object-fit:cover;
+  object-position:var(--fp,50% 30%)}
+/* Positions are NOT written here. sync-artists.py stamps each card's left/top/
+   width/aspect inline from artlistmusic.io's own eight slots, so that when Or
+   drops another photo into the folder one command refills the composition
+   without anybody editing CSS. The eight slots and the parallax rates are
+   documented at the top of that script. */
+.c-veil{position:absolute;inset:0;pointer-events:none;z-index:3;
+  /* px, not %: on a 2900px field a 15% fade would be a 435px grey wash. */
+  background:linear-gradient(180deg,rgba(16,16,19,.34) 0,transparent 190px,
+                             transparent calc(100% - 360px),var(--bg) 100%)}
+@media (max-width:820px){
+  /* artlist keeps all eight on the phone and rescatters them — measured on
+     their live page at 390. Same inline custom properties as the desktop. */
+  .cimg{left:var(--mx);top:var(--my);width:var(--mw);aspect-ratio:var(--mar)}
+}
+@media (prefers-reduced-motion:reduce){.cimg{transform:none !important}}
 
-  .inv-section { margin-bottom: 22px; }
-  .inv-section-label {
-    font-size: 11.5px; letter-spacing: 0.18em;
-    text-transform: uppercase; color: #8A8A92;
-    font-weight: 600; margin-bottom: 8px;
-  }
-  .inv-section-body { font-size: 14.5px; color: #1A1A1F; line-height: 1.6; }
-  .inv-section-body strong { font-weight: 600; }
+/* ═══ the page title, sitting on the bottom of the collage ═══ */
+.hero{position:relative;z-index:3;text-align:center;
+  max-width:var(--page);margin:0 auto;
+  padding:clamp(56px,7vw,104px) var(--s4) clamp(30px,4vw,54px)}
+.hero-eyebrow{display:block;font-family:var(--sans);font-weight:600;font-size:12px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);margin-bottom:26px}
+/* ainsof.io's h1 exactly: Newsreader 500, -.03em, line-height .95 */
+.hero-title{font-family:var(--serif);font-weight:500;
+  font-size:clamp(42px,5.2vw,75px);line-height:.95;letter-spacing:-.03em;
+  color:var(--ink);margin:0}
+.hero-title em{font-style:italic;color:var(--ink)}
+.hero-lede{margin:26px auto 0;max-width:640px;
+  font-family:var(--sans);font-size:clamp(16px,1.4vw,20px);line-height:1.6;
+  color:var(--ink-2)}
+/* their CTA is a pill; ours is the site's square button, coral arrow and all */
+/* ⚠️ Or, 1.9, and he called it a permanent rule: "שכל הכפתורים בדף וזה חוק
+   לתמיד יהיו כמו הכפתור של I'm ready". That button is .btn — stacked glass,
+   backdrop blur, an inset hairline, layered shadow, and a hover that lifts onto
+   a coral ring. Every other button on this page now reuses those exact values
+   instead of carrying its own look. Anything new goes through .btn too. */
+.hero-cta{display:inline-flex;align-items:center;justify-content:center;gap:14px;
+  margin-top:34px;padding:18px var(--s4);border-radius:0;border:0;cursor:pointer;
+  text-decoration:none;
+  font-family:var(--sans);font-weight:500;font-size:17.5px;letter-spacing:-.02em;
+  color:var(--ink);background:rgba(255,255,255,.028);
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.15),
+             0 9px 0 -3px rgba(255,255,255,.05),
+             0 18px 0 -7px rgba(255,255,255,.028),
+             0 22px 46px -26px rgba(0,0,0,.9);
+  transition:transform .42s var(--ease),box-shadow .42s var(--ease),
+             background .42s var(--ease),color .42s var(--ease)}
+.hero-cta:hover{transform:translateY(-3px);
+  background:rgba(255,255,255,.05);
+  box-shadow:inset 0 0 0 1px rgba(150,98,73,.52),
+             0 11px 0 -3px rgba(150,98,73,.10),
+             0 22px 0 -7px rgba(150,98,73,.045),
+             0 28px 54px -26px rgba(0,0,0,.95)}
+.hero-cta:hover{background:#1d1d22;border-color:var(--coral)}
+@media (max-width:700px){
+  .hero{padding-left:var(--s2);padding-right:var(--s2)}
+  .hero-eyebrow{margin-bottom:18px}
+}
 
-  .inv-section.highlighted {
-    background: rgba(232, 197, 71, 0.18);
-    margin-left: -10px; margin-right: -10px;
-    padding: 8px 10px;
-    border-radius: 6px;
-    border-left: 3px solid var(--accent);
-  }
+/* ═══ TERMS & BENEFITS ═══ Or, 1.9: "בדף של ארטליסט יש Terms & benefits, אני
+   רוצה לעשות כזה אצלנו גם, שמתאים רק לנו ולטקסט שלנו."
+   Their section, measured live at 1440: a left-aligned serif heading at 50px/700,
+   then FOUR equal cards in one row — hairline border, transparent inside, title
+   at 23.6px and body at 15px — and under them a row of headline statistics.
+   Taken from them: the four-across row, the hairline card, the heading above it.
+   Kept ours: square corners (the site has no rounded frame anywhere), Newsreader
+   for the heading, Inter for the cards, and --ink-2 for body copy.
+   ⚠️ Their statistics row (100M+ / 1B+ / 10M+) is NOT reproduced. Every number
+   in it is a claim, and I have none of ours that I can source. Left out rather
+   than invented; if Or has the real figures it is four lines to add.
+   ⚠️ Every sentence in the four cards is lifted from what this page already
+   states in its own guidelines and footer — nothing here is new policy. */
+/* ═══ HOW YOU GET PAID ═══════════════════════════════════════════════════
+   ⚠️ Or, 1.9: "לך תראה מה הם עשו תעתיק אחד לאחד... רק נעשה בצבעים שלנו".
+   So these are artlist's own numbers, read off their live page in DevTools at
+   1440 — not eyeballed from a screenshot:
 
-  .inv-line {
-    display: flex; justify-content: space-between;
-    padding: 10px 0; border-bottom: 1px dashed #E5E5DE;
-    font-size: 13.5px;
-  }
-  .inv-line:last-child { border-bottom: none; }
-  .inv-line .desc { flex: 1; padding-right: 12px; }
-  .inv-line .amount { font-weight: 600; }
+     section container   1440 x 603,  padding 64px 99.03px 0,  content 1241.94px
+     heading             x=109, 64px below the section top, 50.49px / weight 400
+     card row            1256.36px wide, display:flex, justify-content:center
+     card wrapper        289.33 x 292.08, margin 10px  → 25px between cards
+     card                287.33 x 290.08, border 1px solid rgb(245,245,245),
+                         border-radius 40px, background TRANSPARENT
+     texture behind      one <img> 1440x603 over the whole section.
+                         No mask, no blur, no filter, no blend — measured.
 
-  .inv-total {
-    margin-top: 4px;
-    display: flex; justify-content: space-between;
-    font-size: 20px; font-weight: 800;
-    color: #1A1A1F;
-  }
+   Only the palette is ours. The geometry is theirs, to the pixel. */
+.terms{position:relative;isolation:isolate;
+  padding:64px 6.875% 0;
+  margin:0 auto var(--s6)}
+/* ⚠️ Or, 1.9: "הריבועים קטנים הם לא כמו בארטליסט". He was right and the cap
+   was why: their row is 1241.94px at a 1440 window — 86.25% of it — not a fixed
+   1242px. Pinning the number made the cards shrink as a share of the page on
+   every screen wider than 1440, which is his. The padding IS the ratio now, so
+   the row stays 86.25% at any width, exactly as theirs does. */
+.terms-inner{margin:0 auto}
 
-  .inv-footer-note {
-    margin-top: 18px; font-size: 11.5px;
-    color: #8A8A92; line-height: 1.5; text-align: center;
-  }
+/* their texture is a single painted plate laid over the whole section — the
+   same move ainsof.io makes. Ours is section-bg-clio.jpg, whose four corners
+   are rgb(16,16,18) = --bg, so it melts into the page instead of ending on an
+   edge. Straight <img>, stretched to the section. Nothing on top of it. */
+.tbg{position:absolute;inset:0;width:100%;height:100%;
+  object-fit:fill;z-index:-1;pointer-events:none;user-select:none}
 
-  .progress { margin-bottom: 56px; }
-  .progress-track { height: 2px; background: var(--line); border-radius: 2px; overflow: hidden; position: relative; }
-  .progress-fill {
-    height: 100%; background: var(--accent); border-radius: 2px;
-    transition: width 400ms cubic-bezier(0.22, 1, 0.36, 1); width: 25%;
-  }
-  .progress-labels {
-    display: flex; justify-content: space-between; margin-top: 14px;
-    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--muted-2); font-weight: 500;
-  }
-  .progress-labels span {
-    transition: color 200ms ease; flex: 1; text-align: center;
-    cursor: pointer; user-select: none;
-  }
-  .progress-labels span:first-child { text-align: left; }
-  .progress-labels span:last-child { text-align: right; }
-  .progress-labels span:hover { color: var(--text); }
-  .progress-labels span.active { color: var(--accent); font-weight: 600; }
+/* ⚠️ Or, 1.9: "אותו פונט כמו בכותרת הראשית של הדף". artlist's heading is
+   weight 400 at line-height 1.2, and copying that made this read as a different
+   face from the hero. These are .hero-title's own values — Newsreader 500 at
+   .95 — kept at their measured 50.5px. */
+.terms-head{font-family:var(--serif);font-weight:500;
+  font-size:clamp(32px,3.5vw,50.5px);line-height:.95;letter-spacing:-.03em;
+  color:var(--ink);margin:0 0 60px}
 
-  .step-header { margin-bottom: 36px; }
-  .step-counter {
-    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
-    color: var(--accent); font-weight: 600; margin-bottom: 12px;
-  }
-  .step-title {
-    font-size: clamp(28px, 4vw, 40px); font-weight: 800;
-    letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 10px;
-  }
-  .step-subtitle {
-    font-size: 15px; color: var(--muted); line-height: 1.55; max-width: 500px;
-  }
+.terms-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:25px}
+.term{border:1px solid var(--ink);border-radius:40px;
+  background:transparent;
+  aspect-ratio:287/290;padding:30px 28px;
+  display:flex;flex-direction:column;gap:12px;justify-content:flex-start}
+/* ⚠️ Or: "גם בכותרות שבתוך הריבועים" — the card titles carry the page's serif
+   as well. Serif runs smaller than sans at the same px, so 20 → 25. */
+.term h3{font-family:var(--serif);font-weight:500;font-size:25px;line-height:1.15;
+  letter-spacing:-.02em;color:var(--ink);margin:0}
+.term p{font-family:var(--sans);font-size:15px;line-height:1.7;
+  color:var(--ink-2);margin:0}
+.term .term-note{color:var(--ink-3);font-size:13.5px}
 
-  .step { display: none; animation: stepFade 360ms cubic-bezier(0.22, 1, 0.36, 1); }
-  .step.active { display: block; }
-  @keyframes stepFade {
-    from { opacity: 0; transform: translateY(8px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+@media (max-width:1180px){.terms-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){
+  .terms{padding:var(--s4) var(--s2) 0}
+  .terms-head{margin-bottom:var(--s3)}
+  .terms-grid{grid-template-columns:1fr;gap:var(--s2)}
+  .term{aspect-ratio:auto;border-radius:28px}
+}
 
-  .field { margin-bottom: 22px; }
-  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .row.single { grid-template-columns: 1fr; }
+/* ═══ layout ═══ */
+/* ⚠️ Or, 1.9: "שים מאחורה טקסטורה כמו מה שיש באתר שלנו מאחרי הכלים בדף
+   הראשי" — that is section-bg-tools-coral.jpg, ainsof.io's own tools plate,
+   already in this repo. Laid the way the site lays it and the way .tbg does
+   below: one <img>, stretched, bleeding past both edges, nothing on top of it.
+   Explicit width, never left/right + width:auto — an <img> is a replaced
+   element and would size itself off its own ratio instead. */
+/* ⚠️ Or, 1.9: "הרקע נמתח לצדדים והוא לא" / "לא עשית". He was right and I had
+   the plate in the wrong box. It sat inside .app, and .app is capped at --page
+   (1760px) with overflow-x:clip — so on any window wider than 1760 the plate
+   was physically clipped to the content column and could never touch the
+   window edges. Measuring the middle of the section showed light and hid the
+   fault. The plate now lives in .app-wrap, which is the full window; .app is
+   only the column the text sits in. */
+.app-wrap{position:relative;isolation:isolate;overflow-x:clip;width:100%}
+.app{position:relative;
+  max-width:900px;margin:0 auto;padding:var(--s5) var(--s4) var(--s6)}
+/* ⚠️ Or, 1.9: "את הרקע תעשה לכל אורך הדף באותו חלק" — the plate covers the
+   whole guidelines block, not its top 64%. object-fit:fill stretches the one
+   plate over the full height; its four corners are rgb(16,16,18) = --bg, so it
+   still ends in the page rather than on an edge. */
+/* ⚠️ Or, 1.9: "כל החלק הזה הרקע מאחורה תמתח לצדדים מבלי לפגוע באיכות".
+   The two halves of that matter separately. Wider is the easy half — the plate
+   now runs a full 100vw past each edge. Quality is the half that needed work:
+   asking the browser to stretch the 1600px source across 3 screens magnifies
+   its JPEG noise. So the wide plate is baked once, offline, with a Lanczos
+   resample to 3400x1018 and 4:4:4 chroma, and the browser only ever displays
+   it near 1:1. Verified after the export: all four corners are still
+   rgb(16,16,18) = --bg, so it keeps melting into the page.
 
-  .field-label {
-    display: block; font-size: 13px; font-weight: 500;
-    color: var(--text); margin-bottom: 8px;
-  }
-  .field-label .req { color: var(--accent); margin-left: 3px; }
-  .field-hint {
-    font-size: 12px; color: var(--muted-2); margin-bottom: 8px; line-height: 1.45;
-  }
+   Or, 1.9: "רק תעשה לו קצת צבע שונה כתום עם מעט טורקיז עדין" — so the plate was
+   re-cooked once more into section-bg-tools-teal.jpg: saturation up and the hue
+   nudged toward orange, plus one soft teal pool screened in off to the right.
+   Corners re-checked after the export and still rgb(16,16,18). */
+.abg{position:absolute;left:50%;transform:translateX(-50%);top:0;
+  width:172vw;height:100%;
+  object-fit:fill;z-index:-1;pointer-events:none;user-select:none;opacity:.40}
+/* and the tooth, over the plate and still behind everything on the page.
+   overlay rather than multiply: on a dark ground it adds grain without pulling
+   the colour anywhere. Two tile sizes that share no factor, so the 256px
+   repeat never becomes visible as a grid. */
+.agrain{position:absolute;left:50%;transform:translateX(-50%);top:0;
+  width:172vw;height:100%;
+  z-index:-1;pointer-events:none;user-select:none;
+  background:url("grain-copper.png") repeat, url("grain-copper.png") repeat;
+  background-size:232px 232px, 149px 149px;
+  background-position:0 0, 53px 31px;
+  mix-blend-mode:overlay;opacity:.26}
+.app.intro-layout{
+  max-width:var(--page);
+  display:grid;grid-template-columns:minmax(0,1fr) clamp(560px,38vw,700px);
+  gap:var(--s5);align-items:start}
+@media (max-width:1180px){
+  .app.intro-layout{grid-template-columns:1fr;gap:var(--s4)}
+  .invoice-sample-sticky{position:static !important}
+}
+@media (max-width:640px){
+  .app{padding:var(--s4) var(--s2) var(--s5)}
+}
 
-  .field input, .field textarea, .field select {
-    width: 100%; background: var(--surface); border: 1px solid var(--line);
-    color: var(--text); font-family: inherit; font-size: 14px;
-    padding: 14px 16px; border-radius: 10px;
-    transition: border-color 150ms ease, background 150ms ease;
-  }
-  .field input::placeholder, .field textarea::placeholder { color: var(--muted-2); }
-  .field input:focus, .field textarea:focus, .field select:focus {
-    outline: none; border-color: var(--accent); background: var(--surface-2);
-  }
-  .field textarea { min-height: 90px; resize: vertical; font-family: inherit; }
+/* ═══ INTRO / GUIDELINES ═══ */
+.intro-lede{font-size:var(--t-lead);line-height:1.55;color:var(--ink-2);
+  max-width:56ch;margin-bottom:var(--s3)}
 
-  .pill-group { display: flex; flex-wrap: wrap; gap: 8px; }
-  .pill { position: relative; cursor: pointer; }
-  .pill input { position: absolute; opacity: 0; pointer-events: none; }
-  .pill span {
-    display: inline-block; padding: 9px 16px;
-    border: 1px solid var(--line); background: var(--surface);
-    border-radius: 999px; font-size: 13px; color: var(--muted);
-    transition: all 150ms ease; user-select: none;
-  }
-  .pill:hover span { border-color: var(--accent-mid); color: var(--text); }
-  .pill input:checked + span {
-    background: var(--accent-soft); border-color: var(--accent);
-    color: var(--accent); font-weight: 600;
-  }
+/* the scroll cue keeps its job, in the site's voice: an eyebrow label and a
+   square outline, not a coral pill with a glow around it. */
+.scroll-arrow{display:flex;align-items:center;gap:14px;margin:var(--s3) 0 var(--s4)}
+.scroll-arrow-text{font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:600}
+.scroll-arrow-icon{width:34px;height:34px;flex:none;
+  box-shadow:inset 0 0 0 1px var(--ring);color:var(--coral);
+  font-size:16px;line-height:1;display:flex;align-items:center;justify-content:center;
+  animation:arrowBounce 1.9s var(--ease) infinite}
+@keyframes arrowBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+@media (prefers-reduced-motion:reduce){.scroll-arrow-icon{animation:none}}
 
-  /* payment method radio grid */
-  .pay-method-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
-    margin-bottom: 18px;
-  }
-  .pay-method { position: relative; cursor: pointer; display: block; }
-  .pay-method input { position: absolute; opacity: 0; pointer-events: none; }
-  .pay-method-card {
-    background: var(--surface); border: 1px solid var(--line);
-    border-radius: 10px; padding: 16px 12px; text-align: center;
-    transition: all 150ms ease;
-  }
-  .pay-method:hover .pay-method-card { border-color: var(--accent-mid); }
-  .pay-method input:checked ~ .pay-method-card {
-    background: var(--accent-soft); border-color: var(--accent);
-  }
-  .pay-method-title {
-    font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px;
-  }
-  .pay-method input:checked ~ .pay-method-card .pay-method-title { color: var(--accent); }
-  .pay-method-sub { font-size: 11px; color: var(--muted-2); }
+.guidelines{display:flex;flex-direction:column;gap:var(--s2);margin-bottom:var(--s4)}
+/* ⚠️ Or, 1.9: "בדיוק לקחת את אותן מסגרות כמו שעשינו בחלק של הלמטה". So these
+   are .term's frame values verbatim — 1px solid --ink, radius 40, background
+   transparent — on a box that happens to be wide instead of square. The filled
+   --surface panel is gone; the plate behind now shows through, which is the
+   whole point of a transparent frame. */
+.guideline{display:block;padding:30px 32px;
+  background:transparent;border:1px solid var(--ink);border-radius:40px}
+/* ⚠️ Or, 1.9: "במקום מספרים תעשה חצים שמחברים בין הקוביות, עדינים החצים".
+   The numbered coral discs are gone and nothing replaced them inside the card.
+   The order is carried between the cards instead: a hairline that fades in out
+   of the card above and lands on a small open arrowhead. The gap grew from 18
+   to 46px to give that connector room to exist. */
+.guidelines{gap:46px}
+.guideline{position:relative}
+/* ⚠️ Or, 1.9: "בקושי רואים את החצים". They were drawn in --line-2
+   (white at .18), which is a divider value, not a mark you are meant to read.
+   Same hairline weight, roughly double the contrast, and a little longer. */
+.guideline + .guideline::before{content:"";position:absolute;
+  left:50%;top:-42px;width:1px;height:28px;
+  background:linear-gradient(to bottom,rgba(255,255,255,.06),rgba(255,255,255,.46))}
+.guideline + .guideline::after{content:"";position:absolute;
+  left:50%;top:-21px;width:9px;height:9px;
+  border-right:1px solid rgba(255,255,255,.46);
+  border-bottom:1px solid rgba(255,255,255,.46);
+  transform:translateX(-50%) rotate(45deg)}
+/* ⚠️ Or, 1.9: "Important — שגם זה לא יהיה כתום". The coral wash and the coral
+   border are gone. It still has to read as the one card you must not skim, so
+   the emphasis moved off colour and onto weight: a brighter frame and a filled
+   number, the same two devices the rest of the page already uses. */
+.guideline-warning{border-color:var(--ink);
+  background:rgba(255,255,255,.045)}
 
-  .pay-detail-block {
-    display: none;
-    padding: 18px; background: var(--surface-2);
-    border-radius: 12px; border: 1px solid var(--line);
-    margin-bottom: 18px;
-    animation: stepFade 240ms ease;
-  }
-  .pay-detail-block.active { display: block; }
+.guideline-body h3{font-family:var(--serif);font-size:var(--t-h3);
+  font-weight:500;letter-spacing:-.03em;line-height:1.15;margin-bottom:10px}
+.guideline-body p{font-size:var(--t-body);color:var(--ink-2);line-height:1.6;
+  margin-bottom:14px}
+.guideline-body p:last-child{margin-bottom:0}
+.guideline-body strong{color:var(--ink);font-weight:600}
+.guideline-list{list-style:none;font-size:var(--t-body);color:var(--ink-2);
+  line-height:1.7;margin-bottom:14px}
+.guideline-list li{padding-left:22px;position:relative}
+.guideline-list li::before{content:"→";position:absolute;left:0;color:var(--coral)}
+.example-box{padding:18px 22px;border-radius:24px;
+  background:rgba(255,255,255,.022);box-shadow:inset 0 0 0 1px var(--line);
+  font-size:var(--t-ui);color:var(--ink-2);line-height:1.7}
+.example-row{margin-bottom:6px}
+.example-row:last-child{margin-bottom:0}
+.example-key{color:var(--ink-3);font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;font-size:var(--t-meta);margin-right:6px}
 
-  @media (max-width: 640px) {
-    .pay-method-grid { grid-template-columns: repeat(2, 1fr); }
-  }
+.intro-cta{margin-top:var(--s3)}
 
-  /* radio group (large clickable cards) */
-  .radio-group { display: flex; flex-direction: column; gap: 10px; }
-  .radio-card {
-    cursor: pointer; padding: 16px 18px;
-    background: var(--surface); border: 1px solid var(--line);
-    border-radius: 10px; transition: all 150ms ease;
-    display: flex; align-items: center; gap: 14px;
-  }
-  .radio-card:hover { border-color: var(--accent-mid); }
-  .radio-card input { display: none; }
-  .radio-card .dot {
-    width: 18px; height: 18px; border-radius: 50%;
-    border: 1.5px solid var(--line-2); flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    transition: border-color 150ms ease;
-  }
-  .radio-card .dot::after {
-    content: ''; width: 8px; height: 8px; border-radius: 50%;
-    background: var(--accent); opacity: 0; transition: opacity 150ms ease;
-  }
-  .radio-card .label { font-size: 14px; color: var(--text); }
-  .radio-card input:checked ~ .dot { border-color: var(--accent); }
-  .radio-card input:checked ~ .dot::after { opacity: 1; }
-  .radio-card:has(input:checked) {
-    background: var(--accent-soft); border-color: var(--accent);
-  }
+/* ═══ the one button ═══
+   Or, 2.8.2026, picking this out of thirty: "מסגרת יפה שקופה והוא יהיה סיסטם
+   דיזיין לכל הכפתורים". Glass sheet, hairline edge, two stacked sheets falling
+   away underneath for depth, coral on hover. Copied from the site's .cta, not
+   redrawn. Back is the same object with quieter ink — a second button style
+   would be a second design system, which is the exact mistake this page made. */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:14px;
+  padding:18px var(--s4);border-radius:0;border:0;cursor:pointer;
+  font-family:inherit;font-weight:500;font-size:17.5px;letter-spacing:-.02em;
+  color:var(--ink);background:rgba(255,255,255,.028);
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.15),
+             0 9px 0 -3px rgba(255,255,255,.05),
+             0 18px 0 -7px rgba(255,255,255,.028),
+             0 22px 46px -26px rgba(0,0,0,.9);
+  transition:transform .42s var(--ease),box-shadow .42s var(--ease),
+             background .42s var(--ease),color .42s var(--ease)}
+.btn span{color:var(--coral);transition:transform .42s var(--ease)}
+.btn:hover:not(:disabled){transform:translateY(-3px);
+  background:rgba(255,255,255,.05);
+  box-shadow:inset 0 0 0 1px rgba(150,98,73,.52),
+             0 11px 0 -3px rgba(150,98,73,.10),
+             0 22px 0 -7px rgba(150,98,73,.045),
+             0 28px 54px -26px rgba(0,0,0,.95)}
+.btn:hover:not(:disabled) span{transform:translateX(3px)}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn-primary{min-width:220px}
+/* same treatment as the primary, one step smaller — not a different object */
+.btn-ghost{font-size:15.5px;padding:15px var(--s3)}
+.btn-ghost:hover:not(:disabled){color:var(--ink)}
+@media (max-width:640px){
+  .btn{padding:15px 26px;font-size:16px}
+  .btn-ghost{font-size:15px}
+}
 
-  /* file upload zone */
-  .file-zone {
-    position: relative; display: block; padding: 28px 20px;
-    border: 1.5px dashed var(--line-2); border-radius: 12px;
-    text-align: center; background: var(--surface);
-    cursor: pointer; transition: all 150ms ease;
-  }
-  .file-zone:hover { border-color: var(--accent); background: var(--surface-2); }
-  .file-zone.has-file { border-style: solid; border-color: var(--accent); background: var(--accent-soft); }
-  .file-zone input[type="file"] { display: none; }
-  .file-zone .icon { font-size: 32px; margin-bottom: 8px; }
-  .file-zone .title { font-size: 14px; color: var(--text); font-weight: 500; margin-bottom: 4px; }
-  .file-zone .sub { font-size: 12px; color: var(--muted-2); }
-  .file-zone .filename { color: var(--accent); font-weight: 600; }
+/* ═══ INVOICE SAMPLE ═══
+   ⚠️ Or, 1.9: "תעשה אותה יותר יפה בצבע אפור במקום לבן". The sheet was #FAFAF5,
+   a near-white that flared against a dark page. Every colour it uses now comes
+   off the five tokens below, so the whole document re-skins from one place.
+   The rest is craft: the corner radius joins the language the rest of the page
+   now speaks, the 3px coral slab at the top is a hairline, the dashed rules are
+   real hairlines, and the highlight reads as a marked passage rather than a
+   filled box. */
+.invoice-sample-sticky{position:sticky;top:104px}
+.invoice-sample-label{display:flex;align-items:center;
+  font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:600;margin-bottom:14px}
+.invoice-sample{
+  /* ⚠️ Or picked this one out of three: "פאנל כהה #1C1C21". */
+  --inv-bg:#1C1C21;          /* the sheet */
+  --inv-ink:#F2F2F5;         /* body and figures */
+  --inv-ink-2:#B4B4BE;       /* secondary lines */
+  --inv-ink-3:#7C7C87;       /* labels and notes */
+  --inv-line:rgba(255,255,255,.12);
+  position:relative;overflow:hidden;border-radius:24px;
+  background:var(--inv-bg);color:var(--inv-ink);padding:46px 42px 40px;
+  font-family:var(--sans);font-size:15px;line-height:1.65;
+  box-shadow:0 30px 70px -30px rgba(0,0,0,.75)}
+/* ⚠️ I put grain ON the sheet here and Or corrected it: "מחוספס הרקע מאחורה
+   בחלק הזה לא מעליו". The sheet stays clean; the roughness belongs to the
+   plate behind the section — see .agrain. */
+.inv-header{display:flex;justify-content:space-between;align-items:flex-start;
+  margin-bottom:26px;padding-bottom:20px;border-bottom:1px solid var(--inv-line)}
+.inv-brand{font-family:var(--serif);font-size:29px;font-weight:500;letter-spacing:-.03em;
+  line-height:1.05}
+.inv-meta{text-align:right;font-size:13px;color:var(--inv-ink-3);line-height:1.55}
+.inv-meta .inv-num{font-weight:600;color:var(--inv-ink);font-size:16px;
+  letter-spacing:-.01em;display:block;margin-bottom:2px}
+.inv-section{margin-bottom:24px}
+.inv-section-label{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--inv-ink-3);font-weight:600;margin-bottom:8px}
+.inv-section-body{font-size:14.5px;color:var(--inv-ink);line-height:1.6}
+.inv-section-body strong{font-weight:600}
+/* ⚠️ Or, 1.9: "הכתום מאוד מכוער בכרטיסים בתוך החשבונית". On the light sheet a
+   coral wash read as a highlighter; on the dark one it went muddy. The colour
+   is gone from the fill entirely — and after a second pass ("PROJECT TITLE /
+   DESCRIPTION תוציא את הכתום") off the labels too. The two important fields are
+   marked by a raised panel alone; there is no orange left inside the sheet. */
+.inv-section.highlighted{background:rgba(255,255,255,.045);
+  margin-left:-14px;margin-right:-14px;padding:14px;border-radius:12px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.inv-line{display:flex;justify-content:space-between;padding:11px 0;
+  border-bottom:1px solid var(--inv-line);font-size:13.5px;color:var(--inv-ink-2)}
+.inv-line:last-child{border-bottom:none}
+.inv-line .desc{flex:1;padding-right:12px}
+.inv-line .amount{font-weight:600;color:var(--inv-ink)}
+.inv-total{margin-top:6px;padding-top:18px;border-top:1px solid var(--inv-line);
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-family:var(--serif);font-size:26px;font-weight:500;letter-spacing:-.03em;
+  color:var(--inv-ink)}
+/* the sheet's smallest type. 10.5px is fine on a desktop screen and too small
+   on a phone, so it lifts on the narrow layout. */
+.inv-fine{font-size:10.5px;color:var(--inv-ink-3)}
+@media (max-width:640px){.inv-fine{font-size:12px}}
+.inv-footer-note{margin-top:22px;padding-top:16px;border-top:1px solid var(--inv-line);
+  font-size:11.5px;color:var(--inv-ink-3);line-height:1.55;text-align:center}
 
-  .nav {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-top: 44px; padding-top: 32px;
-    border-top: 1px solid var(--line); gap: 12px;
-  }
-  .btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    font-family: inherit; font-weight: 600; font-size: 14px;
-    padding: 13px 26px; border-radius: 999px; border: none;
-    cursor: pointer; transition: all 180ms ease;
-  }
-  .btn-ghost {
-    background: transparent; color: var(--muted); border: 1px solid var(--line);
-  }
-  .btn-ghost:hover { color: var(--text); border-color: var(--line-2); }
-  .btn-ghost:disabled { opacity: 0.35; cursor: not-allowed; }
-  .btn-primary {
-    background: var(--accent); color: #1a1400;
-    box-shadow: 0 8px 24px rgba(232, 197, 71, 0.20); min-width: 140px;
-  }
-  .btn-primary:hover:not(:disabled) {
-    background: var(--accent-hover); transform: translateY(-1px);
-    box-shadow: 0 12px 32px rgba(232, 197, 71, 0.30);
-  }
-  .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
+/* ═══ PROGRESS ═══ */
+.progress{margin-bottom:var(--s5)}
+.progress-track{height:1px;background:var(--line);position:relative;overflow:hidden}
+.progress-fill{height:100%;background:var(--coral);width:25%;
+  transition:width .6s var(--ease)}
+.progress-labels{display:flex;justify-content:space-between;margin-top:14px;
+  font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:600}
+.progress-labels span{flex:1;text-align:center;cursor:pointer;user-select:none;
+  transition:color .3s var(--ease)}
+.progress-labels span:first-child{text-align:left}
+.progress-labels span:last-child{text-align:right}
+.progress-labels span:hover{color:var(--ink-2)}
+.progress-labels span.active{color:var(--coral)}
 
-  .success-screen { display: none; text-align: center; padding: 80px 24px; animation: stepFade 360ms ease; }
-  .success-screen.active { display: block; }
-  .success-mark {
-    width: 64px; height: 64px; border-radius: 50%;
-    background: var(--accent-soft); border: 1px solid var(--accent);
-    display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 28px; font-size: 28px; color: var(--accent);
-  }
-  .success-title { font-size: 32px; font-weight: 800; letter-spacing: -0.025em; margin-bottom: 12px; }
-  .success-text {
-    font-size: 15px; color: var(--muted); max-width: 420px; margin: 0 auto; line-height: 1.6;
-  }
+/* ═══ STEPS ═══ */
+.step-header{margin-bottom:var(--s4)}
+.step-counter{font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:600;margin-bottom:14px}
+.step-title{font-family:var(--serif);font-size:var(--t-title);font-weight:500;
+  letter-spacing:-.03em;line-height:1.06;margin-bottom:12px}
+.step-subtitle{font-size:var(--t-lead);line-height:1.55;color:var(--ink-2);max-width:52ch}
+.step{display:none}
+.step.active{display:block;animation:stepIn .95s var(--ease) both}
+@keyframes stepIn{
+  from{opacity:0;transform:translateY(22px);filter:blur(4px)}
+  to  {opacity:1;transform:none;filter:none}}
+@media (prefers-reduced-motion:reduce){.step.active{animation:none}}
 
-  .dev-toggle {
-    position: fixed; bottom: 18px; right: 18px;
-    background: var(--surface); border: 1px solid var(--line);
-    color: var(--muted); font-size: 11px;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    padding: 8px 12px; border-radius: 999px;
-    cursor: pointer; z-index: 200; font-family: inherit;
-    transition: all 150ms ease;
-  }
-  .dev-toggle:hover { color: var(--accent); border-color: var(--accent-mid); }
-  .dev-toggle.on { color: var(--accent); border-color: var(--accent); }
+/* ═══ FIELDS ═══
+   Or, 2.8.2026: "אל תעשה צהוב, אבל כן בסיסטם דיזיין שלנו — הכתום העדין המחוספס".
+   The ring is what a control looks like at rest, not a hover effect; focus only
+   opens it further. Same hairline-inset construction as the button, so a text
+   field and a button read as the same object at different sizes. */
+.field{margin-bottom:var(--s3)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2)}
+.row.single{grid-template-columns:1fr}
+.field-label{display:block;font-size:var(--t-ui);font-weight:500;
+  color:var(--ink);margin-bottom:9px;letter-spacing:-.01em}
+.field-label .req{color:var(--coral);margin-left:4px}
+.field-hint{font-size:var(--t-meta);color:var(--ink-3);margin-bottom:9px;line-height:1.5}
+.field input,.field textarea,.field select{
+  width:100%;border:0;border-radius:0;
+  background:rgba(255,255,255,.022);
+  box-shadow:inset 0 0 0 1px var(--line);
+  color:var(--ink);font-family:inherit;font-size:15px;letter-spacing:-.01em;
+  padding:15px 17px;
+  transition:box-shadow .3s var(--ease),background .3s var(--ease)}
+.field select{appearance:none;-webkit-appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%239d9da8' stroke-width='1.4'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 17px center;background-size:10px 6px;
+  padding-right:44px}
+.field select option{background:var(--surface);color:var(--ink)}
+.field input::placeholder,.field textarea::placeholder{color:var(--ink-3)}
+.field input:hover,.field textarea:hover,.field select:hover{
+  box-shadow:inset 0 0 0 1px var(--line-2)}
+.field input:focus,.field textarea:focus,.field select:focus{
+  outline:none;background:rgba(255,255,255,.04);
+  box-shadow:inset 0 0 0 1px rgba(150,98,73,.52)}
+.field textarea{min-height:110px;resize:vertical}
 
-  footer {
-    border-top: 1px solid var(--line); padding: 24px 40px;
-    display: flex; justify-content: space-between; align-items: center;
-    flex-wrap: wrap; gap: 14px; max-width: 1200px; margin: 0 auto;
-  }
-  footer .foot-l {
-    font-size: 11px; color: var(--muted-2);
-    letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500;
-  }
-  footer .foot-r { font-size: 13px; color: var(--muted); }
-  footer .foot-r a { color: var(--text); border-bottom: 1px solid var(--line); padding-bottom: 1px; }
+/* ═══ payment method — same glass card, chosen state is the coral ring ═══ */
+.pay-method-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;
+  margin-bottom:var(--s3)}
+.pay-method{position:relative;cursor:pointer;display:block}
+.pay-method input{position:absolute;opacity:0;pointer-events:none}
+.pay-method-card{padding:18px 14px;text-align:center;border-radius:0;
+  background:rgba(255,255,255,.022);box-shadow:inset 0 0 0 1px var(--line);
+  transition:box-shadow .3s var(--ease),background .3s var(--ease),transform .3s var(--ease)}
+.pay-method:hover .pay-method-card{box-shadow:inset 0 0 0 1px var(--line-2);transform:translateY(-2px)}
+.pay-method input:checked ~ .pay-method-card{background:var(--coral-dim);
+  box-shadow:inset 0 0 0 1px rgba(150,98,73,.52)}
+.pay-method input:focus-visible ~ .pay-method-card{box-shadow:inset 0 0 0 2px var(--coral)}
+.pay-method-title{font-size:var(--t-ui);font-weight:600;color:var(--ink);margin-bottom:5px}
+.pay-method-sub{font-size:var(--t-meta);color:var(--ink-3);line-height:1.4}
+.pay-detail-block{display:none;padding:var(--s3);border-radius:0;
+  background:rgba(255,255,255,.018);box-shadow:inset 0 0 0 1px var(--line);
+  margin-bottom:var(--s3)}
+.pay-detail-block.active{display:block;animation:stepIn .7s var(--ease) both}
+@media (prefers-reduced-motion:reduce){.pay-detail-block.active{animation:none}}
+@media (max-width:900px){.pay-method-grid{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:560px){.pay-method-grid{grid-template-columns:repeat(2,1fr)}}
 
-  .form-error {
-    margin-top: 14px; padding: 14px 18px;
-    background: rgba(226, 85, 85, 0.08);
-    border: 1px solid rgba(226, 85, 85, 0.30);
-    color: #EC8888; border-radius: 10px;
-    font-size: 13px; display: none;
-  }
-  .form-error.show { display: block; }
+/* ═══ upload ═══ */
+.file-zone{position:relative;display:block;padding:var(--s4) var(--s3);
+  text-align:center;cursor:pointer;border-radius:0;
+  background:rgba(255,255,255,.022);
+  box-shadow:inset 0 0 0 1px var(--line-2);
+  transition:box-shadow .3s var(--ease),background .3s var(--ease),transform .3s var(--ease)}
+.file-zone:hover{transform:translateY(-2px);background:rgba(255,255,255,.04);
+  box-shadow:inset 0 0 0 1px rgba(150,98,73,.52)}
+.file-zone.has-file{background:var(--coral-dim);
+  box-shadow:inset 0 0 0 1px rgba(150,98,73,.52)}
+.file-zone input[type="file"]{display:none}
+/* The emoji that used to sit here is switched off (font-size:0) rather than
+   removed, because the glyph lives in markup the form script also writes to.
+   What is drawn instead is a sheet with three ruled lines — same hairline
+   construction as every other frame on the page. */
+.file-zone .icon{width:32px;height:40px;margin:0 auto 16px;
+  box-shadow:inset 0 0 0 1px var(--line-2);
+  font-size:0;color:transparent;position:relative}
+.file-zone .icon::after{content:"";position:absolute;left:7px;right:7px;top:11px;height:1px;
+  background:var(--ink-3);box-shadow:0 7px 0 var(--ink-3)}
+.file-zone .icon::before{content:"";position:absolute;left:7px;top:32px;width:11px;height:1px;
+  background:var(--ink-3)}
+.file-zone.has-file .icon{box-shadow:inset 0 0 0 1px var(--coral)}
+.file-zone.has-file .icon::after{background:var(--coral);
+  box-shadow:0 7px 0 var(--coral)}
+.file-zone.has-file .icon::before{background:var(--coral)}
+.file-zone .title{font-size:15.5px;color:var(--ink);font-weight:500;margin-bottom:6px;
+  letter-spacing:-.01em;word-break:break-word}
+.file-zone .sub{font-size:var(--t-meta);color:var(--ink-3)}
+.file-zone .filename{color:var(--coral);font-weight:600}
 
-  @media (max-width: 640px) {
-    .topbar { padding: 16px 20px; }
-    .app { padding: 32px 18px 56px; }
-    .row { grid-template-columns: 1fr; }
-    .nav { flex-direction: column-reverse; align-items: stretch; }
-    .btn { width: 100%; }
-    .step-title { font-size: 26px; }
-    footer { padding: 18px 20px; }
-  }
+/* ═══ nav row ═══ */
+.nav{display:flex;justify-content:space-between;align-items:center;gap:var(--s2);
+  margin-top:var(--s4);padding-top:var(--s3);border-top:1px solid var(--line)}
+@media (max-width:640px){
+  .nav{flex-direction:column-reverse;align-items:stretch}
+  .btn{width:100%}
+}
+
+.form-error{display:none;margin-top:var(--s2);padding:15px 18px;border-radius:0;
+  background:rgba(226,85,85,.07);box-shadow:inset 0 0 0 1px rgba(226,85,85,.32);
+  color:#EC8888;font-size:var(--t-ui)}
+.form-error.show{display:block}
+
+/* ═══ success ═══ */
+.success-screen{display:none;text-align:center;padding:var(--s6) var(--s3)}
+.success-screen.active{display:block;animation:stepIn .95s var(--ease) both}
+@media (prefers-reduced-motion:reduce){.success-screen.active{animation:none}}
+.success-mark{width:56px;height:56px;margin:0 auto var(--s3);
+  box-shadow:inset 0 0 0 1px var(--ring);color:var(--coral);
+  font-size:24px;line-height:1;display:flex;align-items:center;justify-content:center}
+.success-title{font-family:var(--serif);font-size:var(--t-display-2);font-weight:500;
+  letter-spacing:-.03em;line-height:1.06;margin-bottom:14px}
+.success-text{font-size:var(--t-lead);line-height:1.55;color:var(--ink-2);
+  max-width:44ch;margin:0 auto}
+
+/* ═══ shared site footer — same component as every page on ainsof.io ═══ */
+footer{--fw:var(--page);width:100%;margin:0;
+  background:#0a0a0c;border-top:1px solid rgba(255,255,255,.06);
+  padding:var(--s5) var(--s4);
+  font-size:14.5px;color:var(--ink-3);display:block}
+footer > *{max-width:var(--fw);margin-left:auto;margin-right:auto}
+footer a{color:var(--ink-2);text-decoration:none;border:0;
+  transition:color .3s var(--ease)}
+footer a:hover{color:var(--ink)}
+/* the five link columns are gone, and with them .fgrid/.fabout/.fcol/.fnav.
+   .fmark is the whole footer now, so it no longer needs the rule that used to
+   separate it from the columns above it. */
+/* ⚠️ Or, 1.9: "בפוטר תסיר את הלוגו למטה". The wordmark and the .fstack that
+   held it are gone, so space-between has nothing to push against — the icons
+   centre instead of hugging the right edge. */
+.fmark{display:flex;align-items:center;justify-content:center;
+  gap:var(--s4)}
+.fsocial{display:flex;align-items:center;gap:12px}
+.fsocial .ig{width:38px;height:38px;display:flex;align-items:center;
+  justify-content:center;color:var(--ink-2);
+  box-shadow:inset 0 0 0 1px var(--line);
+  transition:color .3s var(--ease),box-shadow .3s var(--ease)}
+.fsocial .ig:hover{color:var(--ink);box-shadow:inset 0 0 0 1px var(--line-2)}
+@media (max-width:640px){
+  footer{padding:var(--s4) var(--s2)}
+  .fmark{gap:var(--s3)}
+}
+/* ═══ PHONE FLOORS ═══ last in the sheet on purpose.
+   ⚠️ These two rules were first written up in the top-nav media block and did
+   nothing: .fsocial .ig (38px) and .example-key (11.5px) are declared hundreds
+   of lines further down at the same specificity, so the later declaration won.
+   Measured on 12 phone configurations before the move and after. */
+@media (max-width:640px){
+  /* every tap target reaches 44px, Apple's floor. ⚠️ Six 44px marks plus their
+     gaps come to 324px, which is wider than a 320px handset — so the row wraps
+     rather than pushing a horizontal scrollbar onto the whole page. Caught at
+     320 only; every wider phone fits on one line. */
+  .fsocial{flex-wrap:wrap;justify-content:center;row-gap:10px}
+  .fsocial .ig{width:44px;height:44px}
+  .tn-links a,.tn-logo{display:inline-flex;align-items:center;min-height:44px}
+  /* and no type under 12px: the tracked micro-labels sit at 10.5-11.5px, which
+     reads at desk distance and not in a hand */
+  .example-key,.inv-section-label,.inv-fine,.label,.inv-footer-note,
+  .hero-eyebrow,.invoice-sample-label,.legal,.field-hint,.scroll-arrow-text,
+  .pay-method-sub,.sub{font-size:12px}
+}
 </style>
 
 <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
@@ -523,19 +774,91 @@
 </head>
 <body>
 
-<header class="topbar">
-  <div class="topbar-logo">
-    <img src="assets/ainsof_logo.png" alt="AINSOF" />
-  </div>
-  <a class="topbar-link" href="https://search.ainsof.io" target="_blank" rel="noopener">Catalog ↗</a>
-</header>
+<!-- artlistmusic.io's hero is flat black and the first light on the page is
+     the collage plate underneath it. This glow sat behind the title and made the
+     top of the page a warm wall, so it is off. -->
 
-<section class="hero"></section>
-
-<div class="hero-below">
-  <div class="big">Submit <em>Invoice</em></div>
+<!-- The site's nav, not a bespoke bar. Links are absolute because this page is
+     served from invoices.ainsof.io while the rest of the site is on ainsof.io. -->
+<div class="brand topnav">
+  <a class="tn-logo" href="https://ainsof.io"><img class="logo" src="wordmark.png" width="520" height="116" alt="AINSOF"></a>
+  <nav class="tn-links">
+    <a href="https://ainsof.io/catalogue">Discover</a>
+    <a href="https://ainsof.io/mcp">MCP</a>
+  </nav>
 </div>
 
+
+<!-- ═══ THE HERO ═══ artlistmusic.io opens on a title, not on pictures, and the
+     pictures start underneath it. Their rhythm at 1440, measured live 1.9:
+     eyebrow y=44 · headline 55px on two lines at y=144 and y=210 · a two-line
+     20px/32px lede at y=291 · a pill CTA at y=406 · the collage from y≈460.
+     The type is ours, not theirs: ainsof.io's own h1 is Newsreader 500 at 75px,
+     letter-spacing -.03em, line-height .95, with the emphasised word in serif
+     italic; its eyebrow is Inter 600 12px at .2em, uppercase, muted. Both
+     measured on the live site the same day. -->
+<header class="hero" role="banner">
+  <span class="hero-eyebrow">Composers &amp; Partners</span>
+  <h1 class="hero-title">Submit an <em>invoice</em></h1>
+  <p class="hero-lede">Send AINSOF the invoice for your album, your custom work<br>
+    or your royalty period, and get paid on time.</p>
+  <a class="hero-cta" href="#introScreen">Start &nbsp;&rarr;</a>
+</header>
+
+<!-- ═══ THE COLLAGE ═══ their composition, our language.
+     Eight cards at eight sizes, scattered and overlapping, square-cornered,
+     each drifting at its own rate on both axes as the page scrolls. The light
+     behind them is the site's own painted plate, not a CSS gradient. -->
+<section class="collage" aria-label="AINSOF catalogue artwork">
+  <!-- <img>, not a div: this is how the site itself paints light. object-fit
+       fill stretches the one plate over the box; the negative left/right push
+       its vertical edges out of the window; the two-axis mask dissolves what is
+       left. No second layer, no tiling, no grain. -->
+  <img class="cbg" src="section-bg-tools-coral.jpg" alt="" aria-hidden="true"
+       decoding="async">
+  <div class="cw">
+  <!-- AUTO-CARDS:START -->
+    <div class="cimg" data-py="0.3" data-px="0.0"
+         style="--x:0.000%;--y:1.093%;--w:21.875%;--ar:0.7377;--fp:32% 56%;--mx:0.000%;--my:4.107%;--mw:29.744%;--mar:0.5949">
+      <img src="assets/artists/artist-05.webp" alt="" loading="eager" decoding="async">
+    </div>  <!-- slot 0 · אמנית-מוזיקה-לבן-01.png -->
+    <div class="cimg" data-py="0.42" data-px="0.012"
+         style="--x:17.014%;--y:9.106%;--w:13.264%;--ar:0.7958;--fp:52% 29%;--mx:22.564%;--my:17.679%;--mw:21.026%;--mar:0.7069">
+      <img src="assets/artists/artist-07.webp" alt="" loading="eager" decoding="async">
+    </div>  <!-- slot 1 · קולאז-01-פרח-קוי-לימון.png -->
+    <div class="cimg" data-py="0.03" data-px="0.012"
+         style="--x:9.375%;--y:45.438%;--w:9.375%;--ar:0.7500;--fp:47% 33%;--mx:7.436%;--my:57.679%;--mw:24.103%;--mar:0.7344">
+      <img src="assets/artists/artist-01.webp" alt="" loading="lazy" decoding="async">
+    </div>  <!-- slot 2 · אמן-אלקטרוני-רחוב-03.png -->
+    <div class="cimg" data-py="0.04" data-px="-0.015"
+         style="--x:76.111%;--y:8.651%;--w:9.375%;--ar:0.7418;--fp:47% 26%;--mx:71.282%;--my:11.071%;--mw:19.744%;--mar:0.7549">
+      <img src="assets/artists/artist-04.webp" alt="" loading="lazy" decoding="async">
+    </div>  <!-- slot 3 · אמנית-דיגיי-אפור-03.png -->
+    <div class="cimg" data-py="0.015" data-px="0.0"
+         style="--x:45.833%;--y:16.937%;--w:18.750%;--ar:0.7337;--fp:48% 33%;--mx:47.692%;--my:23.571%;--mw:28.718%;--mar:0.7467">
+      <img src="assets/artists/artist-06.webp" alt="" loading="eager" decoding="async">
+    </div>  <!-- slot 4 · פלמנקו - תמונת מקור 01.png -->
+    <div class="cimg" data-py="0.43" data-px="0.002"
+         style="--x:37.986%;--y:25.861%;--w:14.861%;--ar:1.5396;--fp:50% 50%;--mx:35.897%;--my:54.821%;--mw:23.333%;--mar:1.4000">
+      <img src="assets/artists/artist-02.webp" alt="" loading="lazy" decoding="async">
+    </div>  <!-- slot 5 · אמנית-אינדי-רוק-אפור-05.png -->
+    <div class="cimg" data-py="0.015" data-px="0.0"
+         style="--x:77.569%;--y:41.978%;--w:21.875%;--ar:0.6495;--fp:50% 37%;--mx:71.538%;--my:57.679%;--mw:29.744%;--mar:0.6784">
+      <img src="assets/artists/artist-03.webp" alt="" loading="lazy" decoding="async">
+    </div>  <!-- slot 6 · אמנית-אר-אנד-בי-רחוב-01.png -->
+    <div class="cimg" data-py="0.39" data-px="-0.012"
+         style="--x:68.542%;--y:43.617%;--w:13.264%;--ar:0.7958;--fp:48% 25%;--mx:55.641%;--my:62.857%;--mw:20.769%;--mar:0.7297">
+      <img src="assets/artists/artist-08.webp" alt="" loading="lazy" decoding="async">
+    </div>  <!-- slot 7 · קולאז-03-פטריות-חיפושית-תקליט.png -->
+  <!-- AUTO-CARDS:END -->
+  </div>
+  <div class="c-veil" aria-hidden="true"></div>
+</section>
+
+
+<div class="app-wrap">
+<img class="abg" src="section-bg-tools-teal.jpg" alt="" aria-hidden="true" decoding="async">
+<div class="agrain" aria-hidden="true"></div>
 <main class="app intro-layout" id="appMain">
 
   <!-- ============ INTRO / GUIDELINES ============ -->
@@ -552,7 +875,6 @@
     <div class="guidelines">
 
       <div class="guideline">
-        <div class="guideline-num">1</div>
         <div class="guideline-body">
           <h3>Album / Release (Work for hire)</h3>
           <p>In the subject or description of the invoice, include the project name, project code, and a clear description of your work.</p>
@@ -565,7 +887,6 @@
       </div>
 
       <div class="guideline">
-        <div class="guideline-num">2</div>
         <div class="guideline-body">
           <h3>Royalties</h3>
           <p>For royalty payments, submit your invoice according to the royalty report you received.</p>
@@ -578,7 +899,6 @@
       </div>
 
       <div class="guideline guideline-warning">
-        <div class="guideline-num">!</div>
         <div class="guideline-body">
           <h3>Important</h3>
           <p>Your invoice must clearly specify what it relates to (project or royalty period), including all relevant details such as project title, project code, or reporting period.</p>
@@ -587,7 +907,6 @@
       </div>
 
       <div class="guideline">
-        <div class="guideline-num">3</div>
         <div class="guideline-body">
           <h3>General requirements</h3>
           <ul class="guideline-list">
@@ -618,8 +937,8 @@
 
       <div class="inv-header">
         <div>
-          <div class="inv-brand">Daniel Cohen</div>
-          <div style="font-size: 10.5px; color: #5A5A60; margin-top: 4px;">
+          <div class="inv-brand">John Bille</div>
+          <div class="inv-fine" style="margin-top: 4px;">
             Composer · Tax ID 123456789<br>
             Dizengoff 100, Tel Aviv, Israel
           </div>
@@ -653,25 +972,25 @@
         </div>
       </div>
 
-      <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid #E5E5DE;">
+      <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--inv-line);">
         <div class="inv-total">
           <div>Total</div>
           <div>$5,000</div>
         </div>
       </div>
 
-      <div class="inv-section" style="margin-top: 20px; padding-top: 14px; border-top: 1px solid #E5E5DE;">
+      <div class="inv-section" style="margin-top: 20px; padding-top: 14px; border-top: 1px solid var(--inv-line);">
         <div class="inv-section-label">Payment details</div>
-        <div class="inv-section-body" style="font-size: 10.5px; line-height: 1.6;">
+        <div class="inv-section-body inv-fine" style="line-height: 1.6;">
           Bank: Leumi<br>
           IBAN: IL62 0108 0000 0009 9999 999<br>
           SWIFT: LUMIILIT<br>
-          Holder: Daniel Cohen
+          Holder: John Bille
         </div>
       </div>
 
       <div class="inv-footer-note">
-        Yellow-highlighted fields are the most important.<br>
+        The highlighted fields are the most important.<br>
         Please make sure they appear on your invoice exactly like this.
       </div>
 
@@ -704,7 +1023,7 @@
       <div class="field row">
         <div>
           <label class="field-label" for="full_name">Full name<span class="req">*</span></label>
-          <input id="full_name" name="full_name" type="text" required placeholder="Daniel Cohen" />
+          <input id="full_name" name="full_name" type="text" required placeholder="John Bille" />
         </div>
         <div>
           <label class="field-label" for="email">Email<span class="req">*</span></label>
@@ -823,7 +1142,7 @@
           </div>
           <div>
             <label class="field-label" for="bank_holder_name">Account holder name<span class="req">*</span></label>
-            <input id="bank_holder_name" name="bank_holder_name" type="text" placeholder="Daniel Cohen" />
+            <input id="bank_holder_name" name="bank_holder_name" type="text" placeholder="John Bille" />
           </div>
         </div>
         <div class="field">
@@ -837,7 +1156,7 @@
         <div class="field row">
           <div>
             <label class="field-label" for="il_account_holder">Account holder name<span class="req">*</span></label>
-            <input id="il_account_holder" name="il_account_holder" type="text" placeholder="Daniel Cohen" />
+            <input id="il_account_holder" name="il_account_holder" type="text" placeholder="John Bille" />
           </div>
           <div>
             <label class="field-label" for="il_bank_number">Bank number<span class="req">*</span></label>
@@ -938,11 +1257,274 @@
   </section>
 
 </main>
+</div>
 
+
+<!-- ═══ TERMS & BENEFITS ═══ artlist's four-across row, our copy. Every line
+     below already appears on this page: cards 1 and 2 restate the two invoice
+     types from the guidelines, card 3 restates General requirements, card 4
+     restates the footer's processing promise. No new terms were introduced. -->
+<section class="terms" aria-labelledby="termsHead">
+  <img class="tbg" src="section-bg-clio.jpg" alt="" aria-hidden="true" decoding="async">
+  <div class="terms-inner">
+  <h2 class="terms-head" id="termsHead">Working with us</h2>
+  <div class="terms-grid">
+
+    <!-- ⚠️ Or, 1.9, walking through artlist's four cards one at a time and
+         saying which of them is true of us: buy-out — "נעשה גם אצלנו";
+         royalties — "גבייה גלובלית בכל העולם יש לנו"; creative support —
+         "עיצובים, וידאו, שיווק, מאסטרינג, פרופיל"; distribution — "גם אצלנו".
+         Same four meanings, our own headings and wording. Every claim below is
+         one Or stated in that message; nothing was added to them. The practical
+         instructions these cards used to carry are not lost — they are the
+         guidelines section higher up the page. -->
+
+    <div class="term">
+      <h3>Paid in full, once</h3>
+      <p>A buyout is one agreed payment for the work, invoiced per album or
+        release. The rights move to AINSOF, and from there the music goes out
+        across global content, media and brand campaigns. Where the deal is a
+        hybrid, that payment sits alongside a royalty share rather than
+        replacing it.</p>
+    </div>
+
+    <div class="term">
+      <h3>Every territory, every use</h3>
+      <p>Royalties are administered through our sub-publishing network,
+        territory by territory, so usage is reported and paid wherever in the
+        world it happens. Each period you receive a report covering what was
+        collected on your tracks, and you invoice against it — the period it
+        covers, for the amount it states.</p>
+    </div>
+
+    <div class="term">
+      <h3>You write. We do the rest.</h3>
+      <p>Artwork, video, marketing, mastering and your artist profile are all
+        handled here. You write and produce; everything a release needs around
+        the music is ours to build, so what reaches the catalogue is a finished
+        record and not a folder of files.</p>
+    </div>
+
+    <div class="term">
+      <h3>Everywhere it can be heard</h3>
+      <p>Releases are distributed and registered across the major streaming
+        platforms, with an ISRC on every track and a UPC on every album. The
+        catalogue is licensed to brands, agencies and productions worldwide,
+        and every track is registered so its usage can be traced and
+        reported.</p>
+    </div>
+
+  </div>
+  </div>
+</section>
+
+<!-- ⚠️ Or, 1.9: "בפוטר למטה אפשר להשאיר רק את הלוגואים של האתרים
+     לסושיאל וכדומה". The five link columns and the about copy are gone;
+     what is left is the wordmark, the copyright line and the four social
+     marks. Nothing was lost that this page does not still say for itself —
+     the ten-business-days line and or@ainsof.io both live in the
+     "What happens next" card above. -->
 <footer>
-  <div class="foot-l">© 2026 AINSOF · Music Publishing</div>
-  <div class="foot-r">Questions: <a href="mailto:or@ainsof.io">or@ainsof.io</a></div>
+  <div class="fmark">
+    <div class="fsocial">
+      <a class="ig" href="https://www.instagram.com/ainsof.io/" target="_blank"
+         rel="me noopener" aria-label="AINSOF on Instagram">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+          <rect x="2.6" y="2.6" width="18.8" height="18.8" stroke="currentColor" stroke-width="1.8"/>
+          <circle cx="12" cy="12" r="4.1" stroke="currentColor" stroke-width="1.8"/>
+          <circle cx="17.4" cy="6.6" r="1.3" fill="currentColor"/>
+        </svg>
+      </a>
+      <a class="ig" href="https://www.linkedin.com/company/ainsof" target="_blank"
+         rel="me noopener" aria-label="AINSOF on LinkedIn">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.4h4v11.6H3V9.4Zm6.5 0h3.83v1.59h.05a4.2 4.2 0 0 1 3.78-2.08c4.04 0 4.79 2.66 4.79 6.12V21h-4v-5.28c0-1.26-.02-2.88-1.75-2.88-1.76 0-2.03 1.37-2.03 2.79V21h-4V9.4Z"/>
+        </svg>
+      </a>
+      <a class="ig" href="https://www.youtube.com/@AINSOF_io" target="_blank"
+         rel="me noopener" aria-label="AINSOF on YouTube">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path fill="currentColor" d="M23 7.6a3 3 0 0 0-2.1-2.1C19 5 12 5 12 5s-7 0-8.9.5A3 3 0 0 0 1 7.6 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.4a3 3 0 0 0 2.1 2.1C5 19 12 19 12 19s7 0 8.9-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 23.5 12 31 31 0 0 0 23 7.6zM9.8 15.3V8.7l6 3.3z"/>
+        </svg>
+      </a>
+      <a class="ig" href="https://open.spotify.com/artist/7k7MLFnCGvU0mwoTvPysea" target="_blank"
+         rel="me noopener" aria-label="AINSOF on Spotify">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path fill="currentColor" d="M12 1.6a10.4 10.4 0 1 0 0 20.8 10.4 10.4 0 0 0 0-20.8Zm4.77 15.02a.65.65 0 0 1-.89.22c-2.44-1.49-5.51-1.83-9.13-1a.65.65 0 1 1-.29-1.27c3.96-.9 7.36-.51 10.09 1.16.31.19.4.6.22.89Zm1.27-2.83a.81.81 0 0 1-1.12.27c-2.79-1.72-7.05-2.21-10.35-1.21a.81.81 0 1 1-.47-1.56c3.77-1.14 8.46-.59 11.67 1.38.38.24.5.74.27 1.12Zm.11-2.95c-3.35-1.99-8.87-2.17-12.06-1.2a.98.98 0 1 1-.57-1.87c3.66-1.11 9.76-.9 13.61 1.39a.98.98 0 0 1-1 1.68Z"/>
+        </svg>
+      </a>
+      <a class="ig" href="https://github.com/AINSOF-Tech/mcp" target="_blank"
+         rel="noopener" aria-label="AINSOF MCP on GitHub">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path fill="currentColor" d="M12 1.8a10.2 10.2 0 0 0-3.23 19.88c.51.1.7-.22.7-.49l-.01-1.9c-2.84.62-3.44-1.2-3.44-1.2-.47-1.18-1.14-1.5-1.14-1.5-.93-.63.07-.62.07-.62 1.03.07 1.57 1.06 1.57 1.06.91 1.57 2.4 1.12 2.99.86.09-.66.36-1.12.65-1.38-2.27-.26-4.66-1.14-4.66-5.06 0-1.12.4-2.03 1.05-2.75-.1-.26-.46-1.3.1-2.71 0 0 .86-.28 2.81 1.05a9.7 9.7 0 0 1 5.12 0c1.95-1.33 2.81-1.05 2.81-1.05.56 1.41.21 2.45.1 2.71.66.72 1.05 1.63 1.05 2.75 0 3.93-2.39 4.8-4.67 5.05.37.32.69.94.69 1.9l-.01 2.81c0 .27.19.6.71.49A10.2 10.2 0 0 0 12 1.8Z"/>
+        </svg>
+      </a>
+      <a class="ig" href="https://search.ainsof.io" target="_blank"
+         rel="noopener" aria-label="Browse the AINSOF catalogue via Harvest">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+          <circle cx="10.6" cy="10.6" r="6.4" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M15.4 15.4 20.4 20.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M9 12.6V8.2l3.5-.85v4.05" stroke="currentColor" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="8.05" cy="12.7" r="1.15" fill="currentColor"/>
+          <circle cx="11.55" cy="11.9" r="1.15" fill="currentColor"/>
+        </svg>
+      </a>
+    </div>
+  </div>
 </footer>
+
+<!-- ═══ collage parallax ═══
+     Display only. It reads scroll position and writes a transform on eight
+     decorative divs; it does not touch the form, its fields, or its script.
+
+     Progress is measured against the section's own pass through the viewport
+     rather than raw scrollY, so travel is bounded — on the reference the cards
+     travel hundreds of pixels and simply scroll out of a section with visible
+     overflow, which would empty our field instead, since ours is clipped.
+     The per-card rates are the ones measured off artlistmusic.io. -->
+<script>
+(() => {
+  const sec = document.querySelector('.collage');
+  if (!sec) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const cards = [...sec.querySelectorAll('.cimg')].map(el => ({
+    el, py: parseFloat(el.dataset.py) || 0, px: parseFloat(el.dataset.px) || 0
+  }));
+  let ticking = false;
+  let AMP = 900;
+  // Their fast cards drift 304-434px per 1000px of scroll, so the amplitude
+  // wants to be large — but the field is clipped, and how far a card can fall
+  // before it runs out the bottom depends on where that card sits and how fast
+  // it moves. A single tuned number kept breaking every time Or added a photo
+  // and a new slot came into play (measured: 178px out the bottom the moment
+  // the sixth arrived). So it is derived instead of guessed: each card reports
+  // the room under it, and the amplitude is the largest one that no card can
+  // outrun. Nothing to retune when the folder changes.
+  const setAmp = () => {
+    const h = sec.getBoundingClientRect().height;
+    let cap = 1600;
+    for (const c of cards) {
+      if (c.py <= 0) continue;
+      // -34: the idle drift now reaches ~23px of downward travel on top of the
+      // parallax (it was ~10 when this reserve said 18), so the cap has to
+      // leave room for the bigger number or the fast cards clip out the bottom.
+      const room = h - (c.el.offsetTop + c.el.offsetHeight) - 34;
+      cap = Math.min(cap, Math.max(0, room) / c.py);
+    }
+    AMP = Math.min(cap, h * 1.3);
+  };
+  setAmp();
+
+  // ⚠️ Or, 1.9: "תעשה לתמונות כזה תנועה במושן לצדדים קצת למטה למעלה." The
+  // scroll parallax alone leaves the field dead the moment you stop scrolling —
+  // artlist's is scroll-only, measured (zero movement at rest, sampled every
+  // 250ms for 3.5s). This adds a slow idle drift on top of it, which is his
+  // call, not theirs.
+  //
+  // ⚠️ Or, 1.9, second pass: "את התמונות בחלק של האירו תעשה להם תנועה יפה
+  // מורגשת." The first pass answered "קצת" and came out at 9-16px sideways and
+  // 5-10px vertical, which on a 315px card is under 3% — technically moving,
+  // not actually noticeable. Roughly doubled, and two more channels added so
+  // the extra travel reads as a card floating in space rather than sliding on
+  // a rail: a breath of scale and a whisper of rotation, each on its own long
+  // period.
+  //
+  // Four sines per card, every one on a different period, so no two channels
+  // line up and the combination never repeats inside a viewing — that is what
+  // keeps it continuous instead of a loop you can catch. All numbers come off
+  // the card's index, so they are stable across reloads and no two cards drift
+  // together.
+  const TAU = Math.PI * 2;
+  const drift = cards.map((c, i) => ({
+    ax: 18 + (i % 3) * 5,           // 18-28px sideways
+    ay: 13 + ((i + 1) % 3) * 5,     // 13-23px up and down
+    ar: 0.26 + (i % 3) * 0.09,      // 0.26-0.44deg of tilt
+    as: 0.010 + ((i + 1) % 3) * .004, // 1.0-1.8% of breath
+    tx: 11 + (i % 4) * 1.9,         // 11-17s
+    ty: 14 + ((i + 2) % 4) * 1.7,   // 14-19s, never a multiple of tx
+    tr: 19 + (i % 3) * 2.3,         // 19-24s
+    ts: 16 + ((i + 1) % 3) * 2.1,   // 16-20s
+    fx: i * 1.13, fy: i * 0.71,     // phase, so nothing starts together
+    fr: i * 0.53, fs: i * 0.91,
+    bias: 0                         // filled in below
+  }));
+
+  // ⚠️ A card sitting flush against an edge cannot drift outward: slot 0 is at
+  // x:0, and a plain sine took it to -7.8px, sliding its rounded corner under
+  // the window edge (measured). So a card with less room than its amplitude
+  // drifts INWARD only — the sine is remapped from -1..1 to 0..1 and signed
+  // toward the middle. Same travel, never past the edge.
+  const setBias = () => {
+    const W = sec.clientWidth;
+    cards.forEach((c, i) => {
+      const d = drift[i], l = c.el.offsetLeft;
+      const r = W - (l + c.el.offsetWidth);
+      d.bias = l < d.ax ? 1 : (r < d.ax ? -1 : 0);
+      // ⚠️ the bias fixes translation, not the new scale channel: growing a
+      // 315px card by 1.8% widens it ~2.8px on each side, and a card sitting at
+      // x:0 lost 1.2px under the window edge (measured). Anchoring the origin
+      // to the edge it hugs makes it grow inward only.
+      c.el.style.transformOrigin =
+        d.bias === 1 ? 'left center' : (d.bias === -1 ? 'right center' : 'center');
+    });
+  };
+  setBias();
+
+  let t0 = null;
+
+  function apply(now) {
+    ticking = false;
+    if (t0 === null) t0 = now || 0;
+    const time = ((now || 0) - t0) / 1000;
+    const r = sec.getBoundingClientRect();
+    const vh = window.innerHeight || 1;
+    // 0 the moment the section's top reaches the bottom of the window, 1 once
+    // it has left above. ⚠️ It runs 0→1, not -0.5→+0.5: the positions written
+    // into each card ARE artlist's DOM positions, and on their page the cards
+    // only ever drift DOWN from there as you scroll (measured: +304, +423,
+    // +434, +391 per 1000px, never negative). A symmetric range made cards
+    // rise above their slot first and the field clipped 125px off the top.
+    const p = (vh - r.top) / (vh + r.height);
+    const t = Math.max(0, Math.min(1, p));
+    for (let i = 0; i < cards.length; i++) {
+      const c = cards[i], d = drift[i];
+      const sx = Math.sin(TAU * time / d.tx + d.fx);
+      const x = t * c.px * AMP +
+                d.ax * (d.bias ? d.bias * (sx + 1) / 2 : sx);
+      const y = t * c.py * AMP + d.ay * Math.sin(TAU * time / d.ty + d.fy);
+      const rot = d.ar * Math.sin(TAU * time / d.tr + d.fr);
+      const scl = 1 + d.as * Math.sin(TAU * time / d.ts + d.fs);
+      c.el.style.transform =
+        'translate3d(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px,0) ' +
+        'rotate(' + rot.toFixed(3) + 'deg) scale(' + scl.toFixed(4) + ')';
+    }
+    if (running) requestAnimationFrame(apply);
+  }
+
+  // The drift has to run every frame, but only while the field is actually on
+  // screen — otherwise it burns a frame budget behind the guidelines and the
+  // footer for nothing. Scroll still schedules a single frame when the loop is
+  // parked, so the parallax stays correct on the way in and out.
+  let running = false;
+  const io = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting && !running) {
+      running = true; t0 = null; requestAnimationFrame(apply);
+    } else if (!e.isIntersecting) {
+      running = false;
+    }
+  }, { rootMargin: '120px' });
+  io.observe(sec);
+
+  function onScroll() {
+    if (!running && !ticking) { ticking = true; requestAnimationFrame(apply); }
+  }
+  function onResize() { setAmp(); setBias(); onScroll(); }
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onResize, { passive: true });
+  requestAnimationFrame(apply);
+})();
+</script>
 
 <script>
   const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyiLZh5TAJQuBzk0s6tutostf282XRyablbupdQN0J8ASxr2BDCQsXdzs__BnbuOLrLeg/exec';
