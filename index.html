@@ -21,6 +21,14 @@
      for every heading. Same @font-face block, same unicode-range split, so this
      page renders in the same two voices as the rest of the site rather than
      pulling a Google-hosted Inter that is a different file. -->
+<!-- ⚠️ the faces are self-hosted, so nothing discovers them until the CSS is
+     parsed — a guaranteed FOUT on a first visit. Only the two the page opens
+     with are preloaded; the ext subset and the italic can arrive late.
+     Placed BEFORE <style>: the preload scanner reaches it at the start of the
+     parse instead of after 770 lines of CSS. -->
+<link rel="preload" href="inter.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="newsreader.woff2" as="font" type="font/woff2" crossorigin>
+
 <style>
 @font-face{font-family:'Inter';font-style:normal;font-weight:100 900;
   font-display:swap;src:url(inter.woff2) format('woff2');
