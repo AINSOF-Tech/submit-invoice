@@ -52,6 +52,13 @@
   --line:rgba(255,255,255,.075); --line-2:rgba(255,255,255,.18);
   --ink:#fff; --ink-2:#9d9da8; --ink-3:#5c5c67;
   --coral:#966249; --coral-dim:rgba(150,98,73,.16);
+  /* ⚠️ 2.9 — --coral is a surface and rule colour. At text size on a dark page
+     it measures 2.6-3.0, so glyphs drawn in it (the two arrows) use this
+     lighter member of the same family instead. */
+  --coral-ink:#E2AE91;
+  /* the required marker has to stay red to read as "required", but the
+     error red is a surface value and measures under 3 as a 13px glyph. */
+  --req:#E89393;
   --ring:rgba(150,98,73,.20); --ring-soft:rgba(150,98,73,.10);
   --page:1760px;
   --t-display:clamp(44px,6.4vw,84px);
@@ -239,7 +246,7 @@ img{display:block}
   max-width:var(--page);margin:0 auto;
   padding:clamp(56px,7vw,104px) var(--s4) clamp(30px,4vw,54px)}
 .hero-eyebrow{display:block;font-family:var(--sans);font-weight:600;font-size:12px;
-  letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);margin-bottom:26px}
+  letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2);margin-bottom:26px}
 /* ainsof.io's h1 exactly: Newsreader 500, -.03em, line-height .95 */
 .hero-title{font-family:var(--serif);font-weight:500;
   font-size:clamp(42px,5.2vw,75px);line-height:.95;letter-spacing:-.03em;
@@ -272,7 +279,6 @@ img{display:block}
              0 11px 0 -3px rgba(150,98,73,.10),
              0 22px 0 -7px rgba(150,98,73,.045),
              0 28px 54px -26px rgba(0,0,0,.95)}
-.hero-cta:hover{background:#1d1d22;border-color:var(--coral)}
 @media (max-width:700px){
   .hero{padding-left:var(--s2);padding-right:var(--s2)}
   .hero-eyebrow{margin-bottom:18px}
@@ -320,8 +326,10 @@ img{display:block}
    same move ainsof.io makes. Ours is section-bg-clio.jpg, whose four corners
    are rgb(16,16,18) = --bg, so it melts into the page instead of ending on an
    edge. Straight <img>, stretched to the section. Nothing on top of it. */
+/* ⚠️ 2.9 — carries no opacity, and the card copy over its lit middle measured
+   below the readable floor. Same treatment as the plate above the form. */
 .tbg{position:absolute;inset:0;width:100%;height:100%;
-  object-fit:fill;z-index:-1;pointer-events:none;user-select:none}
+  object-fit:fill;z-index:-1;pointer-events:none;user-select:none;opacity:.5}
 
 /* ⚠️ Or, 1.9: "אותו פונט כמו בכותרת הראשית של הדף". artlist's heading is
    weight 400 at line-height 1.2, and copying that made this read as a different
@@ -343,7 +351,7 @@ img{display:block}
   letter-spacing:-.02em;color:var(--ink);margin:0}
 .term p{font-family:var(--sans);font-size:15px;line-height:1.7;
   color:var(--ink-2);margin:0}
-.term .term-note{color:var(--ink-3);font-size:13.5px}
+.term .term-note{color:var(--ink-2);font-size:13.5px}
 
 @media (max-width:1180px){.terms-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){
@@ -389,7 +397,7 @@ img{display:block}
    Corners re-checked after the export and still rgb(16,16,18). */
 .abg{position:absolute;left:50%;transform:translateX(-50%);top:0;
   width:172vw;height:100%;
-  object-fit:fill;z-index:-1;pointer-events:none;user-select:none;opacity:.40}
+  object-fit:fill;z-index:-1;pointer-events:none;user-select:none;opacity:.18}
 /* and the tooth, over the plate and still behind everything on the page.
    overlay rather than multiply: on a dark ground it adds grain without pulling
    the colour anywhere. Two tile sizes that share no factor, so the 256px
@@ -400,7 +408,7 @@ img{display:block}
   background:url("grain-copper.png") repeat, url("grain-copper.png") repeat;
   background-size:232px 232px, 149px 149px;
   background-position:0 0, 53px 31px;
-  mix-blend-mode:overlay;opacity:.26}
+  mix-blend-mode:overlay;opacity:.13}
 .app.intro-layout{
   max-width:var(--page);
   display:grid;grid-template-columns:minmax(0,1fr) clamp(560px,38vw,700px);
@@ -421,9 +429,9 @@ img{display:block}
    square outline, not a coral pill with a glow around it. */
 .scroll-arrow{display:flex;align-items:center;gap:14px;margin:var(--s3) 0 var(--s4)}
 .scroll-arrow-text{font-size:12px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--ink-3);font-weight:600}
+  color:var(--ink-2);font-weight:600}
 .scroll-arrow-icon{width:34px;height:34px;flex:none;
-  box-shadow:inset 0 0 0 1px var(--ring);color:var(--coral);
+  box-shadow:inset 0 0 0 1px var(--ring);color:var(--coral-ink);
   font-size:16px;line-height:1;display:flex;align-items:center;justify-content:center;
   animation:arrowBounce 1.9s var(--ease) infinite}
 @keyframes arrowBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
@@ -471,13 +479,13 @@ img{display:block}
 .guideline-list{list-style:none;font-size:var(--t-body);color:var(--ink-2);
   line-height:1.7;margin-bottom:14px}
 .guideline-list li{padding-left:22px;position:relative}
-.guideline-list li::before{content:"→";position:absolute;left:0;color:var(--coral)}
+.guideline-list li::before{content:"→";position:absolute;left:0;color:var(--coral-ink)}
 .example-box{padding:18px 22px;border-radius:24px;
   background:rgba(255,255,255,.022);box-shadow:inset 0 0 0 1px var(--line);
   font-size:var(--t-ui);color:var(--ink-2);line-height:1.7}
 .example-row{margin-bottom:6px}
 .example-row:last-child{margin-bottom:0}
-.example-key{color:var(--ink-3);font-weight:600;letter-spacing:.14em;
+.example-key{color:var(--ink-2);font-weight:600;letter-spacing:.14em;
   text-transform:uppercase;font-size:var(--t-meta);margin-right:6px}
 
 .intro-cta{margin-top:var(--s3)}
@@ -499,7 +507,7 @@ img{display:block}
              0 22px 46px -26px rgba(0,0,0,.9);
   transition:transform .42s var(--ease),box-shadow .42s var(--ease),
              background .42s var(--ease),color .42s var(--ease)}
-.btn span{color:var(--coral);transition:transform .42s var(--ease)}
+.btn span{color:var(--coral-ink);transition:transform .42s var(--ease)}
 .btn:hover:not(:disabled){transform:translateY(-3px);
   background:rgba(255,255,255,.05);
   box-shadow:inset 0 0 0 1px rgba(150,98,73,.52),
@@ -528,13 +536,14 @@ img{display:block}
 .invoice-sample-sticky{position:sticky;top:104px}
 .invoice-sample-label{display:flex;align-items:center;
   font-size:12px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--ink-3);font-weight:600;margin-bottom:14px}
+  color:var(--ink-2);font-weight:600;margin-bottom:14px}
 .invoice-sample{
   /* ⚠️ Or picked this one out of three: "פאנל כהה #1C1C21". */
   --inv-bg:#1C1C21;          /* the sheet */
   --inv-ink:#F2F2F5;         /* body and figures */
   --inv-ink-2:#B4B4BE;       /* secondary lines */
-  --inv-ink-3:#7C7C87;       /* labels and notes */
+  --inv-ink-3:#9A9AA6;       /* labels and notes — lifted 2.9, and still
+                                a step below --inv-ink-2, which #B4B4C0 was not */
   --inv-line:rgba(255,255,255,.12);
   position:relative;overflow:hidden;border-radius:24px;
   background:var(--inv-bg);color:var(--inv-ink);padding:46px 42px 40px;
@@ -586,18 +595,20 @@ img{display:block}
   transition:width .6s var(--ease)}
 .progress-labels{display:flex;justify-content:space-between;margin-top:14px;
   font-size:12px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--ink-3);font-weight:600}
+  color:var(--ink-2);font-weight:600}
 .progress-labels span{flex:1;text-align:center;cursor:pointer;user-select:none;
   transition:color .3s var(--ease)}
 .progress-labels span:first-child{text-align:left}
 .progress-labels span:last-child{text-align:right}
-.progress-labels span:hover{color:var(--ink-2)}
-.progress-labels span.active{color:var(--coral)}
+.progress-labels span:hover{color:var(--ink)}
+/* coral stays on the fill bar, where it is a surface; the label it marks
+   goes white, which is both readable and a clearer "you are here". */
+.progress-labels span.active{color:var(--ink)}
 
 /* ═══ STEPS ═══ */
 .step-header{margin-bottom:var(--s4)}
 .step-counter{font-size:12px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--ink-3);font-weight:600;margin-bottom:14px}
+  color:var(--ink-2);font-weight:600;margin-bottom:14px}
 .step-title{font-family:var(--serif);font-size:var(--t-title);font-weight:500;
   letter-spacing:-.03em;line-height:1.06;margin-bottom:12px}
 .step-subtitle{font-size:var(--t-lead);line-height:1.55;color:var(--ink-2);max-width:52ch}
@@ -618,8 +629,8 @@ img{display:block}
 .row.single{grid-template-columns:1fr}
 .field-label{display:block;font-size:var(--t-ui);font-weight:500;
   color:var(--ink);margin-bottom:9px;letter-spacing:-.01em}
-.field-label .req{color:var(--coral);margin-left:4px}
-.field-hint{font-size:var(--t-meta);color:var(--ink-3);margin-bottom:9px;line-height:1.5}
+.field-label .req{color:var(--req);margin-left:4px}
+.field-hint{font-size:var(--t-meta);color:var(--ink-2);margin-bottom:9px;line-height:1.5}
 .field input,.field textarea,.field select{
   width:100%;border:0;border-radius:0;
   background:rgba(255,255,255,.022);
@@ -632,7 +643,10 @@ img{display:block}
   background-repeat:no-repeat;background-position:right 17px center;background-size:10px 6px;
   padding-right:44px}
 .field select option{background:var(--surface);color:var(--ink)}
-.field input::placeholder,.field textarea::placeholder{color:var(--ink-3)}
+/* ⚠️ 2.9, measured against the real pixels behind them rather than against
+   --bg: --ink-3 is a decoration value and these are things a person has to
+   read. Same lift the artists page took. */
+.field input::placeholder,.field textarea::placeholder{color:var(--ink-2)}
 .field input:hover,.field textarea:hover,.field select:hover{
   box-shadow:inset 0 0 0 1px var(--line-2)}
 .field input:focus,.field textarea:focus,.field select:focus{
@@ -653,7 +667,7 @@ img{display:block}
   box-shadow:inset 0 0 0 1px rgba(150,98,73,.52)}
 .pay-method input:focus-visible ~ .pay-method-card{box-shadow:inset 0 0 0 2px var(--coral)}
 .pay-method-title{font-size:var(--t-ui);font-weight:600;color:var(--ink);margin-bottom:5px}
-.pay-method-sub{font-size:var(--t-meta);color:var(--ink-3);line-height:1.4}
+.pay-method-sub{font-size:var(--t-meta);color:var(--ink-2);line-height:1.4}
 .pay-detail-block{display:none;padding:var(--s3);border-radius:0;
   background:rgba(255,255,255,.018);box-shadow:inset 0 0 0 1px var(--line);
   margin-bottom:var(--s3)}
@@ -690,8 +704,8 @@ img{display:block}
 .file-zone.has-file .icon::before{background:var(--coral)}
 .file-zone .title{font-size:15.5px;color:var(--ink);font-weight:500;margin-bottom:6px;
   letter-spacing:-.01em;word-break:break-word}
-.file-zone .sub{font-size:var(--t-meta);color:var(--ink-3)}
-.file-zone .filename{color:var(--coral);font-weight:600}
+.file-zone .sub{font-size:var(--t-meta);color:var(--ink-2)}
+.file-zone .filename{color:var(--coral-ink);font-weight:600}
 
 /* ═══ nav row ═══ */
 .nav{display:flex;justify-content:space-between;align-items:center;gap:var(--s2);
@@ -711,7 +725,7 @@ img{display:block}
 .success-screen.active{display:block;animation:stepIn .95s var(--ease) both}
 @media (prefers-reduced-motion:reduce){.success-screen.active{animation:none}}
 .success-mark{width:56px;height:56px;margin:0 auto var(--s3);
-  box-shadow:inset 0 0 0 1px var(--ring);color:var(--coral);
+  box-shadow:inset 0 0 0 1px var(--ring);color:var(--coral-ink);
   font-size:24px;line-height:1;display:flex;align-items:center;justify-content:center}
 .success-title{font-family:var(--serif);font-size:var(--t-display-2);font-weight:500;
   letter-spacing:-.03em;line-height:1.06;margin-bottom:14px}
@@ -745,6 +759,15 @@ footer a:hover{color:var(--ink)}
   footer{padding:var(--s4) var(--s2)}
   .fmark{gap:var(--s3)}
 }
+/* ⚠️ Or, 2.9: "תתקן הכל". Measured on the LIVE page the way the artists page
+   was measured — screenshot twice, once with every glyph transparent, so the
+   true background under each run of text is known, plate included. The grey
+   copy over the lit middle came in at 3.28-3.89 against a 4.5 floor. Two
+   levers, both applied: the plates were dimmed (.abg .40 -> .18, its grain
+   .26 -> .13, .tbg from no opacity at all -> .5), and every --ink-3 that a
+   person actually has to read moved up to --ink-2. --ink-3 stays, but only on
+   decoration. */
+
 /* ═══ PHONE FLOORS ═══ last in the sheet on purpose.
    ⚠️ These two rules were first written up in the top-nav media block and did
    nothing: .fsocial .ig (38px) and .example-key (11.5px) are declared hundreds
@@ -762,7 +785,9 @@ footer a:hover{color:var(--ink)}
      reads at desk distance and not in a hand */
   .example-key,.inv-section-label,.inv-fine,.label,.inv-footer-note,
   .hero-eyebrow,.invoice-sample-label,.legal,.field-hint,.scroll-arrow-text,
-  .pay-method-sub,.sub{font-size:12px}
+  /* ⚠️ .file-zone .sub is two classes and beat a bare .sub, so "Max 10 MB"
+     stayed at 11.5px on a phone. Matched on specificity. */
+  .pay-method-sub,.sub,.file-zone .sub{font-size:12px}
 }
 </style>
 
