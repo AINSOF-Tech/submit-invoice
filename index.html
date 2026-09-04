@@ -682,11 +682,7 @@ img{display:block}
 .pay-method input:focus-visible ~ .pay-method-card{box-shadow:inset 0 0 0 2px var(--coral)}
 .pay-method-title{font-size:var(--t-ui);font-weight:600;color:var(--ink);margin-bottom:5px}
 .pay-method-sub{font-size:var(--t-meta);color:var(--ink-2);line-height:1.4}
-.pay-detail-block{display:none;padding:var(--s3);border-radius:0;
-  background:rgba(255,255,255,.018);box-shadow:inset 0 0 0 1px var(--line);
-  margin-bottom:var(--s3)}
-.pay-detail-block.active{display:block;animation:stepIn .7s var(--ease) both}
-@media (prefers-reduced-motion:reduce){.pay-detail-block.active{animation:none}}
+@media (prefers-reduced-motion:reduce){}
 @media (max-width:900px){.pay-method-grid{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:560px){.pay-method-grid{grid-template-columns:repeat(2,1fr)}}
 
@@ -1645,6 +1641,12 @@ l0 -30 -90 0 -90 0 0 30 c0 27 -3 30 -30 30 l-30 0 0 3210 0 3210 -30 0 c-27
       if (!ils.value.trim() && !usd.value.trim()) {
         usd.focus();
         errBox.textContent = 'Please enter the amount — in USD, or in ILS if you invoice in shekels.';
+        errBox.classList.add('show');
+        return false;
+      }
+      if (ils.value.trim() && usd.value.trim()) {
+        ils.focus();
+        errBox.textContent = 'Please fill in only one amount, the currency your invoice is made out in.';
         errBox.classList.add('show');
         return false;
       }
