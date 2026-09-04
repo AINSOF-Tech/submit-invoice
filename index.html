@@ -638,6 +638,12 @@ img{display:block}
 .field-label{display:block;font-size:var(--t-ui);font-weight:500;
   color:var(--ink);margin-bottom:9px;letter-spacing:-.01em}
 .field-label .req{color:var(--req);margin-left:4px}
+.pay-note{border:1px solid var(--line-2);border-radius:10px;padding:16px 18px;margin-bottom:var(--s3);font-size:var(--t-meta);color:var(--ink-2);line-height:1.65}
+.pay-note strong{color:var(--ink)}
+.pay-note+.pay-note{margin-top:calc(var(--s3) * -0.4)}
+.pay-method{height:100%}
+.pay-method-card{height:100%;display:flex;flex-direction:column;justify-content:center}
+.rec-pill{display:block;width:fit-content;margin:0 auto 5px;border:1px solid var(--line-2);border-radius:999px;padding:1px 7px;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
 .field-hint{font-size:var(--t-meta);color:var(--ink-2);margin-bottom:9px;line-height:1.5}
 .field input,.field textarea,.field select{
   width:100%;border:0;border-radius:0;
@@ -947,7 +953,14 @@ footer a:hover{color:var(--ink)}
           <h3>General requirements</h3>
           <ul class="guideline-list">
             <li>Include an invoice number and date.</li>
-            <li>Include your full bank transfer details (IBAN, bank name, etc.).</li>
+            <li>Make the invoice out in <strong>USD</strong>. Israeli invoices in ILS, with VAT.</li>
+            <li>Include <strong>whatever your own bank needs to receive an international
+              transfer</strong>, exactly as your bank holds it. What a bank asks for is not the same
+              in every country, so give the details yours uses — all of them.</li>
+            <li>For most countries that is: account holder full name and address, bank name and
+              address, <strong>SWIFT / BIC</strong> and <strong>IBAN</strong>. Where there is no IBAN
+              — USA, Canada, Australia and others — it is the account number plus the local code:
+              ABA / routing, transit or BSB. If your bank uses something else, put that.</li>
             <li>Include the billing details below on the invoice.</li>
           </ul>
           <div class="example-box">
@@ -1018,10 +1031,12 @@ footer a:hover{color:var(--ink)}
       <div class="inv-section" style="margin-top: 20px; padding-top: 14px; border-top: 1px solid var(--inv-line);">
         <div class="inv-section-label">Payment details</div>
         <div class="inv-section-body inv-fine" style="line-height: 1.6;">
-          Bank: Leumi<br>
+          Holder: John Bille<br>
+          Holder address: Dizengoff 100, Tel Aviv, 6433222, Israel<br>
+          Bank: Leumi &middot; 19 Herzl St, Tel Aviv, Israel<br>
           IBAN: IL62 0108 0000 0009 9999 999<br>
-          SWIFT: LUMIILIT<br>
-          Holder: John Bille
+          SWIFT / BIC: LUMIILIT<br>
+          <span style="opacity:.75">This is one example. Give whatever your own bank needs — no IBAN in your country means account number + ABA / routing / transit / BSB instead.</span>
         </div>
       </div>
 
@@ -1069,7 +1084,7 @@ footer a:hover{color:var(--ink)}
 
       <div class="field">
         <label class="field-label" for="tax_id">Tax ID number</label>
-        <div class="field-hint">If applicable. Leave blank if you don't have one.</div>
+        <div class="field-hint">Your business / VAT number. Leave blank if your country does not give you one.</div>
         <input id="tax_id" name="tax_id" type="text" placeholder="123456789" />
       </div>
     </section>
@@ -1107,6 +1122,19 @@ footer a:hover{color:var(--ink)}
         </div>
         <input id="project_details" name="project_details" type="text" required placeholder="AIN-CAT 050_Trailer Percussion (Power Percussion Trailer)" />
       </div>
+
+      <div class="field row">
+        <div>
+          <label class="field-label" for="invoice_number">Invoice number<span class="req">*</span></label>
+          <div class="field-hint">Exactly as it appears on your invoice.</div>
+          <input id="invoice_number" name="invoice_number" type="text" required placeholder="2026-014" />
+        </div>
+        <div>
+          <label class="field-label" for="invoice_date">Invoice date<span class="req">*</span></label>
+          <div class="field-hint">The date printed on your invoice.</div>
+          <input id="invoice_date" name="invoice_date" type="date" required />
+        </div>
+      </div>
     </section>
 
     <!-- STEP 3: PAYMENT -->
@@ -1114,25 +1142,38 @@ footer a:hover{color:var(--ink)}
       <div class="step-header">
         <div class="step-counter">Step 3 of 4</div>
         <h1 class="step-title">How should we pay you?</h1>
-        <p class="step-subtitle">Provide your preferred payment method and the amounts.</p>
+        <p class="step-subtitle">Provide your preferred payment method and the amount.</p>
+      </div>
+
+      <div class="pay-note">
+        <strong>We pay from Bank Leumi, Israel, and we pay in USD or ILS only.</strong><br>
+        <strong>Outside Israel:</strong> we pay in USD, so please make your invoice out in USD. Your account does not have to be a USD account — if it is not, your own bank converts the money when it arrives, at their rate.<br>
+        <strong>In Israel:</strong> we pay in ILS. Your balance is held in USD and we convert it to ILS at the rate on the day we pay. If you would rather be paid in USD, tell us before you submit.
+      </div>
+
+      <div class="pay-note">
+        <strong>Your bank details go on the invoice itself, not here.</strong> Put on it whatever
+        your own bank needs to receive an international transfer, exactly as your bank holds it —
+        the details are not the same in every country, so give the ones yours uses. A detail that is
+        missing or spelled differently is what holds a payment up.
       </div>
 
       <div class="field">
         <label class="field-label">Preferred payment method<span class="req">*</span></label>
-        <div class="field-hint">Choose one — the relevant fields will appear below.</div>
+        <div class="field-hint">Just tell us how you want it. The account details themselves go on your invoice.</div>
         <div class="pay-method-grid">
           <label class="pay-method">
             <input type="radio" name="payment_method_type" value="Bank Transfer (Israel)" required>
             <div class="pay-method-card">
               <div class="pay-method-title">Israeli Bank Transfer</div>
-              <div class="pay-method-sub">Local — bank / branch / account</div>
+              <div class="pay-method-sub"><span class="rec-pill">Recommended</span>Israel only &middot; bank / branch / account</div>
             </div>
           </label>
           <label class="pay-method">
             <input type="radio" name="payment_method_type" value="Bank Transfer">
             <div class="pay-method-card">
               <div class="pay-method-title">Bank Transfer</div>
-              <div class="pay-method-sub">International wire</div>
+              <div class="pay-method-sub"><span class="rec-pill">Recommended</span>Anywhere in the world</div>
             </div>
           </label>
           <label class="pay-method">
@@ -1146,7 +1187,7 @@ footer a:hover{color:var(--ink)}
             <input type="radio" name="payment_method_type" value="Bit">
             <div class="pay-method-card">
               <div class="pay-method-title">Bit</div>
-              <div class="pay-method-sub">Israel only</div>
+              <div class="pay-method-sub">Israel only &middot; phone number</div>
             </div>
           </label>
           <label class="pay-method">
@@ -1159,100 +1200,26 @@ footer a:hover{color:var(--ink)}
         </div>
       </div>
 
-      <!-- Bank Transfer fields -->
-      <div class="pay-detail-block" data-method="Bank Transfer">
-        <div class="field row">
-          <div>
-            <label class="field-label" for="bank_iban">IBAN<span class="req">*</span></label>
-            <input id="bank_iban" name="bank_iban" type="text" placeholder="IL62 0108 0000 0009 9999 999" />
-          </div>
-          <div>
-            <label class="field-label" for="bank_swift">SWIFT / BIC<span class="req">*</span></label>
-            <input id="bank_swift" name="bank_swift" type="text" placeholder="LUMIILIT" />
-          </div>
-        </div>
-        <div class="field row">
-          <div>
-            <label class="field-label" for="bank_name">Bank name<span class="req">*</span></label>
-            <input id="bank_name" name="bank_name" type="text" placeholder="Bank Leumi" />
-          </div>
-          <div>
-            <label class="field-label" for="bank_holder_name">Account holder name<span class="req">*</span></label>
-            <input id="bank_holder_name" name="bank_holder_name" type="text" placeholder="John Bille" />
-          </div>
-        </div>
-        <div class="field">
-          <label class="field-label" for="bank_holder_address">Account holder address<span class="req">*</span></label>
-          <input id="bank_holder_address" name="bank_holder_address" type="text" placeholder="Dizengoff 100, Tel Aviv, 6433222, Israel" />
-        </div>
+      <div class="field">
+        <label class="field-label">Amount<span class="req">*</span></label>
+        <div class="field-hint">Fill in <strong>one</strong> box, the one your invoice is made out in. Not both.</div>
       </div>
-
-      <!-- Israeli Bank Transfer fields -->
-      <div class="pay-detail-block" data-method="Bank Transfer (Israel)">
-        <div class="field row">
-          <div>
-            <label class="field-label" for="il_account_holder">Account holder name<span class="req">*</span></label>
-            <input id="il_account_holder" name="il_account_holder" type="text" placeholder="John Bille" />
-          </div>
-          <div>
-            <label class="field-label" for="il_bank_number">Bank number<span class="req">*</span></label>
-            <input id="il_bank_number" name="il_bank_number" type="text" placeholder="12 — Bank Hapoalim" />
-          </div>
-        </div>
-        <div class="field row">
-          <div>
-            <label class="field-label" for="il_branch_number">Branch number<span class="req">*</span></label>
-            <input id="il_branch_number" name="il_branch_number" type="text" placeholder="345" />
-          </div>
-          <div>
-            <label class="field-label" for="il_account_number">Account number<span class="req">*</span></label>
-            <input id="il_account_number" name="il_account_number" type="text" placeholder="123456" />
-          </div>
-        </div>
-      </div>
-
-      <!-- Payoneer fields -->
-      <div class="pay-detail-block" data-method="Payoneer">
-        <div class="field">
-          <label class="field-label" for="payoneer_email">Payoneer email<span class="req">*</span></label>
-          <div class="field-hint">Any applicable fees are the responsibility of the recipient.</div>
-          <input id="payoneer_email" name="payoneer_email" type="email" placeholder="daniel.cohen@gmail.com" />
-        </div>
-      </div>
-
-      <!-- Bit fields -->
-      <div class="pay-detail-block" data-method="Bit">
-        <div class="field">
-          <label class="field-label" for="bit_phone">Phone number linked to Bit<span class="req">*</span></label>
-          <input id="bit_phone" name="bit_phone" type="tel" placeholder="0501234567" />
-        </div>
-      </div>
-
-      <!-- PayPal fields -->
-      <div class="pay-detail-block" data-method="PayPal">
-        <div class="field">
-          <label class="field-label" for="paypal_email">PayPal email<span class="req">*</span></label>
-          <div class="field-hint">Any applicable fees are the responsibility of the recipient.</div>
-          <input id="paypal_email" name="paypal_email" type="email" placeholder="daniel.cohen@gmail.com" />
-        </div>
-      </div>
-
-      <div class="field row">
-        <div>
-          <label class="field-label" for="amount_ils">Amount in ILS (with VAT)</label>
-          <div class="field-hint">For Israeli citizens only.</div>
-          <input id="amount_ils" name="amount_ils" type="text" placeholder="5,850" />
-        </div>
+      <div class="field row" style="margin-top:-6px">
         <div>
           <label class="field-label" for="amount_usd">Amount in USD</label>
-          <div class="field-hint">Leave blank if not applicable.</div>
+          <div class="field-hint">Everyone outside Israel.</div>
           <input id="amount_usd" name="amount_usd" type="text" placeholder="1,500" />
+        </div>
+        <div>
+          <label class="field-label" for="amount_ils">Amount in ILS (with VAT)</label>
+          <div class="field-hint">Israeli invoices only. Leave blank if you are not in Israel.</div>
+          <input id="amount_ils" name="amount_ils" type="text" placeholder="5,850" />
         </div>
       </div>
 
       <div class="field">
         <label class="field-label" for="notes">Any final notes?</label>
-        <input id="notes" name="notes" type="text" placeholder="123456789" />
+        <input id="notes" name="notes" type="text" placeholder="Anything else we need in order to pay you" />
       </div>
     </section>
 
@@ -1289,7 +1256,9 @@ footer a:hover{color:var(--ink)}
   <section class="success-screen" id="successScreen">
     <div class="success-mark">✓</div>
     <h2 class="success-title">Invoice submitted.</h2>
-    <p class="success-text">Thanks. Your invoice has been received. Payment is processed within ten business days. You'll receive a confirmation email shortly.</p>
+    <p class="success-text">Thanks. Your invoice has been received, and Noa will confirm it by email shortly.<br><br>
+      Buyouts and one off payments are settled within <b>ten business days</b>.
+      Royalties are settled twice a year, within 90 days of each half year closing, so <b>28 September</b> and <b>31 March</b>.</p>
   </section>
 
 </main>
@@ -1593,13 +1562,25 @@ l0 -30 -90 0 -90 0 0 30 c0 27 -3 30 -30 30 l-30 0 0 3210 0 3210 -30 0 c-27
 <script>
   const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyiLZh5TAJQuBzk0s6tutostf282XRyablbupdQN0J8ASxr2BDCQsXdzs__BnbuOLrLeg/exec';
 
+  // Land on the form, not on the top of the page. The form starts far down a
+  // long marketing page and the top nav is sticky, so y=0 puts the hero on
+  // screen and the form out of sight — which reads as the page jumping back.
+  function scrollToForm() {
+    const fc = document.getElementById('formContainer');
+    if (!fc) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    const nav = document.querySelector('.topnav');
+    const navH = nav ? nav.getBoundingClientRect().height : 0;
+    const y = fc.getBoundingClientRect().top + window.scrollY - navH - 18;
+    window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+  }
+
   // intro start button
   document.getElementById('startBtn').addEventListener('click', () => {
     document.getElementById('introScreen').style.display = 'none';
     document.getElementById('invoiceSample').style.display = 'none';
     document.getElementById('appMain').classList.remove('intro-layout');
     document.getElementById('formContainer').style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToForm();
   });
 
   const TOTAL_STEPS = 4;
@@ -1625,7 +1606,7 @@ l0 -30 -90 0 -90 0 0 30 c0 27 -3 30 -30 30 l-30 0 0 3210 0 3210 -30 0 c-27
     prevBtn.textContent = n === 1 ? '← Back to guidelines' : '← Back';
     nextBtn.textContent = n === TOTAL_STEPS ? 'Submit ✓' : 'Continue →';
     errBox.classList.remove('show');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToForm();
   }
 
   function validateStep(n) {
@@ -1657,25 +1638,25 @@ l0 -30 -90 0 -90 0 0 30 c0 27 -3 30 -30 30 l-30 0 0 3210 0 3210 -30 0 c-27
         return false;
       }
     }
+
+    if (n === 3) {
+      const ils = document.getElementById('amount_ils');
+      const usd = document.getElementById('amount_usd');
+      if (!ils.value.trim() && !usd.value.trim()) {
+        usd.focus();
+        errBox.textContent = 'Please enter the amount — in USD, or in ILS if you invoice in shekels.';
+        errBox.classList.add('show');
+        return false;
+      }
+    }
+
     return true;
   }
 
   // payment method toggle
-  const payRadios = document.querySelectorAll('input[name="payment_method_type"]');
-  const payBlocks = document.querySelectorAll('.pay-detail-block');
-  payRadios.forEach(r => {
-    r.addEventListener('change', () => {
-      payBlocks.forEach(b => {
-        const isActive = b.dataset.method === r.value;
-        b.classList.toggle('active', isActive);
-        // toggle required for nested inputs
-        b.querySelectorAll('input').forEach(inp => {
-          if (isActive) inp.setAttribute('required', '');
-          else inp.removeAttribute('required');
-        });
-      });
-    });
-  });
+  // The payment-detail blocks were removed on 4.9.2026: the invoice PDF is the
+  // single source for bank details, so there is nothing left to show or hide.
+
 
   // file selection
   const fileInput = document.getElementById('invoiceFile');
